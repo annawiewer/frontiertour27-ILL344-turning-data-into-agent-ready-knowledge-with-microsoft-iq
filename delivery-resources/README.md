@@ -30,7 +30,14 @@ Presenter, re-delivery, and train-the-trainer materials for this session.
 
 ## Run of show
 
-Add timing, transitions, and delivery notes.
+This flow was used for AI Tour Singapore and is planned for AI Tour London. Customize it for your own session while preserving time for attendees to work through the lab.
+
+For a 60-minute session:
+
+1. **First 15 minutes:** Cover the presentation deck.
+2. **Transition to the lab:** Show attendees how to sign in to the Skillable environment and complete the pre-checks in the [lab instructions](../instructions/overview.md#verify-the-environment-setup).
+3. **Orient attendees in the virtual machine:** Show them how to open **Desktop > aitour-ILL344** in Visual Studio Code and find the notebooks in **src/notebooks/**. Start with **part1-standard-foundry-iq-kb.ipynb**.
+4. **Remainder of the session:** Let attendees work through the notebooks sequentially for the rest of the 60-minute session.
 
 ## Demo reproducibility
 
@@ -39,7 +46,9 @@ and notes required to reproduce them.
 
 ## Setup notes
 
-Use this section for short setup reminders. Link to detailed setup notes if needed.
+At the tech check the day before your session, the event team will provide the location-specific link attendees need to start the lab. Add a slide to your presentation showing that link, and display it when transitioning to the Skillable environment.
+
+Use the [lab instructions](../instructions/overview.md) for sign-in guidance, environment pre-checks, and the notebook sequence.
 
 ## Support
 
