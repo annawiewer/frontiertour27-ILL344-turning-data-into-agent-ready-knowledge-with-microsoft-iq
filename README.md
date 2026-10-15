@@ -52,7 +52,7 @@ Pick your next step based on your learning style:
 
 | Resource | What you'll get |
 |----------|-----------------|
-| **[Session Recording](https://aka.ms/aitour27/ILL344/youtube)** | A recording of session ILL344 by the session creator |
+| **[Session Recording](https://aka.ms/ft27/ill344/youtube)** | A recording of session ILL344 by the session creator |
 | **[Foundry IQ (Azure AI Search) documentation](https://learn.microsoft.com/azure/search/)** | Explore the full capabilities of Foundry IQ (Azure AI Search) |
 | **[Create a knowledge base](https://learn.microsoft.com/azure/search/agentic-retrieval-how-to-create-knowledge-base)** | Follow the steps to create and configure a knowledge base |
 | **[Design an index for agentic retrieval](https://learn.microsoft.com/azure/search/agentic-retrieval-how-to-create-index)** | Learn best practices for structuring data for agentic retrieval |
