@@ -1,10 +1,10 @@
 <a name="start-building"></a>
 
 <p align="center">
-<img src="img/banner-ai-tour-27.png" alt="Microsoft AI Tour" width="100%"/>
+<img src="img/banner-frontier-tour-27.png" alt="Microsoft Frontier Tour 2027" width="100%"/>
 </p>
 
-# [Microsoft AI Tour](https://aitour.microsoft.com)
+# [Microsoft Frontier Tour 2027](https://aitour.microsoft.com)
 
 ## 🔥 ILL344: Turning data into agent-ready knowledge with Microsoft IQ
 
@@ -57,8 +57,8 @@ Pick your next step based on your learning style:
 | **[Create a knowledge base](https://learn.microsoft.com/azure/search/agentic-retrieval-how-to-create-knowledge-base)** | Follow the steps to create and configure a knowledge base |
 | **[Design an index for agentic retrieval](https://learn.microsoft.com/azure/search/agentic-retrieval-how-to-create-index)** | Learn best practices for structuring data for agentic retrieval |
 | **[Microsoft Learn](https://learn.microsoft.com)** | Official documentation and guided learning paths on these topics |
-| **[AI Tour Resource Center](https://aka.ms/aitour27-resource-center)** | Additional session repos and materials from AI Tour |
-| **[Microsoft Foundry Community](https://aka.ms/MicrosoftFoundryDiscord-AITour27)** | Connect with other learners and experts in our Discord community |
+| **[Frontier Tour 2027 Resource Center](https://aka.ms/FrontierTour27)** | Additional session repos and materials from Frontier Tour 2027 |
+| **[Microsoft Foundry Community](https://aka.ms/MicrosoftFoundryDiscord-ft27)** | Connect with other learners and experts in our Discord community |
 
 ### 🌟 Microsoft Learn MCP Server
 
