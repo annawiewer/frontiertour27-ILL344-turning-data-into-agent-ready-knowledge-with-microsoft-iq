@@ -1,7 +1,5 @@
 # Delivery resources
 
-<!-- AI TOUR TEMPLATE PLACEHOLDER: replace the required deck link before publication. Optional recording links can remain unavailable. -->
-
 Presenter, re-delivery, and train-the-trainer materials for this session.
 
 ## Core materials
@@ -30,7 +28,7 @@ Presenter, re-delivery, and train-the-trainer materials for this session.
 
 ## Run of show
 
-This flow was used for AI Tour Singapore and is planned for AI Tour London. Customize it for your own session while preserving time for attendees to work through the lab.
+This flow was used for Frontier Tour Singapore and is planned for Frontier Tour London. Customize it for your own session while preserving time for attendees to work through the lab.
 
 For a 60-minute session:
 
