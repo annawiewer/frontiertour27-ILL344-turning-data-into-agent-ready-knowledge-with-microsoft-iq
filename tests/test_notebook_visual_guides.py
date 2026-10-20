@@ -365,6 +365,7 @@ class AzureArchitectureTests(unittest.TestCase):
                         set(config["covers"]),
                     )
                     for node in config["focus"]:
+                        self.assertEqual(groups[node].attrib["opacity"], "1")
                         self.assertEqual(groups[node].attrib["data-build-state"],
                                          "completed" if complete else "planned")
                         shape = groups[node].find(ns + "path")
@@ -373,8 +374,13 @@ class AzureArchitectureTests(unittest.TestCase):
                     for edge in config["new_edges"]:
                         self.assertEqual(groups[edge].attrib["opacity"], "1" if complete else "0.12")
                     for node in ("policy", "indexes", "models"):
-                        self.assertEqual(groups[node].attrib["opacity"], "0.4")
-                        self.assertEqual(groups[node].find(ns + "path").attrib["stroke"], "#B9C1CA")
+                        self.assertEqual(groups[node].attrib["opacity"], "0.55")
+                    for node in ("cluster_identity", "entra", "notebook->entra"):
+                        self.assertEqual(groups[node].attrib["opacity"], "0.18")
+                    for node in ("cluster_foundry", "cluster_azure", "cluster_local"):
+                        self.assertEqual(groups[node].attrib["opacity"], "0.55")
+                    for node in ("policy", "indexes"):
+                        self.assertEqual(groups[node].find(ns + "path").attrib["stroke"], self.generator.BLUE)
                     if part == 5:
                         self.assertNotIn("kb->models", groups)
                         self.assertIn("agent->models", groups)

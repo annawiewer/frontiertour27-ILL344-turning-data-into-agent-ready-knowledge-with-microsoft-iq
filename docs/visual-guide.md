@@ -4,6 +4,8 @@ Use the notebook, its architecture map, and the relevant portal side by side. At
 
 ## Reading the architecture
 
+All notebook boundary views follow Part 1's selective transparency: background identity uses 18% opacity, existing model services and outer local/Azure boundaries use 55%, and focused build cards remain fully readable. Parts 2-5 also subdue reused evidence sources at 55% and the earlier policy-upload path at 18%. They do not apply a blanket fade to all nodes, labels, or arrows. Before views retain faint planned query connections and dashed target outlines. After views show the completed query connections at full strength.
+
 Start with the [overall service map](../img/architecture/azure-overview.svg) and [service-role explanation](../README.md#which-service-does-what). The [notebook-directory README](../src/notebooks/README.md) gives a compact route through all five parts.
 
 ![Five-source architecture and the local notebook boundary](../img/architecture/azure-combined.svg)

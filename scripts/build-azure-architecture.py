@@ -590,20 +590,25 @@ def build_part_reveal(part, complete=False):
         elif not complete and text.text == "Live source":
             text.text = "Planned live connection" if part in (2, 3) else "Existing source definition"
 
-    for name, group in groups.items():
-        kind = group.attrib.get("class")
-        if kind == "cluster":
-            group.set("opacity", "0.45")
-        elif kind == "node":
-            group.set("opacity", "0.4")
-            shape = group.find(ns + "path")
-            shape.set("fill", "#F5F6F8")
-            shape.set("stroke", "#B9C1CA")
-        elif kind == "edge":
-            group.set("opacity", "0.15")
+    for name in ("cluster_identity", "entra", "notebook->entra"):
+        groups[name].set("opacity", "0.18")
+    for name in ("cluster_foundry", "models", "cluster_azure", "cluster_local"):
+        groups[name].set("opacity", "0.55")
+    for name in ("policy", "indexes"):
+        groups[name].set("opacity", "0.55")
+        shape = groups[name].find(ns + "path")
+        shape.set("fill", "white")
+        shape.set("stroke", BLUE)
+    for name in ("pdf", "pdf->policy", "policy->models"):
+        groups[name].set("opacity", "0.18")
+    if part == 4:
+        for name in ("ontology", "lakehouse", "workiq"):
+            groups[name].set("opacity", "0.55")
+    if part == 5:
+        groups["notebook"].set("opacity", "0.18")
     for name in config["focus"]:
         group = groups[name]
-        group.set("opacity", "1" if complete else "0.65")
+        group.set("opacity", "1")
         group.set("data-build-state", "completed" if complete else "planned")
         shape = group.find(ns + "path")
         shape.set("fill", "#FFF0D8")
@@ -613,9 +618,6 @@ def build_part_reveal(part, complete=False):
             shape.set("stroke-dasharray", "8,5")
     for name in config["new_edges"]:
         groups[name].set("opacity", "1" if complete else "0.12")
-    for name in ("entra", "notebook->entra"):
-        groups[name].set("opacity", "0.55")
-
     for cluster, caption in config["covers"].items():
         shape = groups[cluster].find(ns + "path")
         coordinates = [float(n) for n in re.findall(r"-?\d+(?:\.\d+)?", shape.attrib["d"])]
@@ -625,7 +627,7 @@ def build_part_reveal(part, complete=False):
         ET.SubElement(cover, ns + "rect", {
             "x": str(left), "y": str(top), "width": str(right - left),
             "height": str(bottom - top), "rx": "12",
-            "fill": "#F4F5F7", "stroke": "#D8DDE3",
+            "fill": "#F4F5F7", "fill-opacity": "0.98", "stroke": "#D8DDE3",
         })
         text = ET.SubElement(cover, ns + "text", {
             "x": str((left + right) / 2), "y": str((top + bottom) / 2),
