@@ -127,11 +127,15 @@ WALKTHROUGHS = {
 }
 
 
-def legend_label():
+def legend_label(agent_runtime=False):
     rows = (
-        (BLUE, "&#9473;&#9473;&#9654;", "Blue, solid: retrieve evidence / call the KB (REST or MCP)"),
-        (PURPLE, "&#9473;&#9473;&#9654;", "Purple, solid: model call for planning / answer synthesis"),
+        (BLUE, "&#9473;&#9473;&#9654;", "Blue, solid: local calls, MCP and evidence retrieval"
+         if agent_runtime else "Blue, solid: retrieve evidence / call the KB (REST or MCP)"),
+        (PURPLE, "&#9473;&#9473;&#9654;", "Purple, solid: model call for tool selection / answer synthesis"
+         if agent_runtime else "Purple, solid: model call for planning / answer synthesis"),
+    ) + (() if agent_runtime else (
         (GRAY, "- - &#9654;", "Gray, dashed: sign-in, upload, embeddings or source data access"),
+    )) + (
         (ORANGE, "&#9632;", "Orange boxes: focus of this phase. Gray boxes: not connected to this KB."),
     )
     return (
@@ -174,7 +178,7 @@ def label(title, lines=(), icon=None):
     )
 
 
-def build(stage):
+def build(stage, detailed=False):
     overview = stage == "overview"
     if not overview and stage not in STAGES:
         raise ValueError(f"Unknown architecture stage: {stage}")
@@ -185,6 +189,7 @@ def build(stage):
         title, kb_name, attached, new = STAGES[stage]
     foundation = stage == "start"
     agent = stage == "agent"
+    agent_detail = detailed and agent
     client_enabled = not foundation
     notebook_enabled = client_enabled and not agent
     agent_enabled = overview or agent
@@ -200,7 +205,7 @@ def build(stage):
             for sentence in DESCRIPTIONS[stage]
         ) +
         '<TR><TD><FONT POINT-SIZE="12">Arrows: caller to dependency. Responses return on the same connection.</FONT></TD></TR>'
-        f'<TR><TD>{legend_label()}</TD></TR>'
+        f'<TR><TD>{legend_label(agent_detail)}</TD></TR>'
         '<TR><TD><FONT POINT-SIZE="12">Logical lab architecture, not live status. Public endpoints, no VNet / private endpoints.</FONT></TD></TR>'
         '</TABLE>>];',
         'node [shape=plain, fontname="Segoe UI", fontsize=15, fontcolor="#172B4D"];',
@@ -236,13 +241,21 @@ def build(stage):
     cluster("local", "PARTICIPANT DEVICE  |  not hosted in Azure", PURPLE, "#F8F6FC")
     node("notebook", "Jupyter notebook", [
         "Local Python client",
+        "Runs the agent + displays its answer" if agent_detail else
         "Parts 1-4: display the KB answer" if notebook_enabled else "Other parts: reference only",
-    ], "browser", notebook_enabled)
+    ], "browser", notebook_enabled or agent_detail)
     if overview or agent:
         node("agent", "Microsoft Agent Framework", [
             "Part 5: local Python agent", "MCP tool + model client", "Not a hosted Foundry agent",
         ], active=agent_enabled, focus=agent)
-    node("pdf", "Purchasing policy PDF", ["Local input, uploaded in Part 1"], active=True)
+    if agent_detail:
+        node("mcp_tool", "MCPStreamableHTTPTool", [
+            "Local tool client, not a hosted service",
+            "knowledge_base_retrieve only",
+            "Search key in api-key header",
+        ], focus=True)
+    if not detailed:
+        node("pdf", "Purchasing policy PDF", ["Local input, uploaded in Part 1"], active=True)
     lines.append("}")
 
     cluster("azure", "AZURE RESOURCE GROUP  |  preconfigured services", BLUE, "#F4F9FF")
@@ -258,11 +271,33 @@ def build(stage):
         short = kb_name.removesuffix("-knowledge-base")
         kb_lines = [short + "-", "knowledge-base", f"{len(attached)} connected source definitions"]
         kb_lines.append("extractiveData / minimal / no model" if agent else "answerSynthesis / model attached")
-    node("kb", "Knowledge base + source definitions", kb_lines, "foundry-iq",
+    node("kb", "Knowledge base" if detailed else "Knowledge base + source definitions", kb_lines, "foundry-iq",
          not foundation, not foundation)
+    if agent_detail:
+        node("mcp_endpoint", "Knowledge base MCP endpoint", [
+            "/knowledgebases/{name}/mcp",
+            "Exposed automatically by Search",
+            "Returns evidence, not a final answer",
+        ], focus=True)
+    if detailed:
+        node("index_sources", "Two index source definitions", [
+            "supplier-evidence-knowledge-source",
+            "sourcing-documents-knowledge-source",
+            "Reused from Part 1" if agent else "Create or update in Step 3",
+        ], focus=not agent)
+        if not agent:
+            node("fabric_source", "Fabric source definition", [
+                "fabric-ontology-knowledge-source", "Create or update in Step 3",
+                "Delegated user token at query time",
+            ], focus=True)
+            node("workiq_source", "Work IQ source definition", [
+                "workiq-knowledge-source", "Create or update in Step 3",
+                "User assertion at query time",
+            ], focus=True)
     node("indexes", "Existing Search indexes", [
         "supplier-evidence", "sourcing-documents",
         "Chunks, vectors and citation metadata",
+        "Existing data, not recreated here" if detailed else
         "Connected" if "evidence" in attached else "Preloaded, not connected to this KB",
     ], active="evidence" in attached, focus=bool(new & {"evidence", "sourcing"}))
     node("policy", "File knowledge source", [
@@ -272,29 +307,98 @@ def build(stage):
     lines.append("}")
     cluster("foundry", "Microsoft Foundry  |  existing account + project", PURPLE, "#F7F6FD")
     node("models", "Azure OpenAI model deployments", [
+        "Existing chat model deployment",
+        "Tool selection + answer synthesis",
+        "Azure OpenAI key authentication",
+    ] if agent_detail else [
         "gpt-5.4: planning / answer synthesis",
         "text-embedding-3-large: text to vectors",
     ], "foundry")
     lines.extend(["}", "}"])
 
     fabric_active = "fabric" in attached
+    if not agent_detail:
+        add_remote_boundaries(lines, cluster, node, fabric_active, "fabric" in new,
+                              "workiq" in attached, "workiq" in new, detailed)
+
+    # Invisible constraints keep resource boundaries in consistent reading order.
+    lines.append('notebook -> kb [style=invis, weight=5];')
+    if agent_detail:
+        lines.extend([
+            '{rank=same; notebook; agent; mcp_tool;}',
+            '{rank=same; kb; mcp_endpoint; models;}',
+        ])
+    else:
+        lines.extend([
+            'kb -> ontology [style=invis, weight=5];',
+            'kb -> workiq [style=invis, weight=5];',
+            '{rank=same; notebook; ' + ("" if detailed else "pdf; ") +
+            'entra;' + ("agent;" if overview or agent else "") + "}",
+            '{rank=same; kb; indexes; policy; models;}',
+            '{rank=same; ontology; lakehouse; workiq;}',
+        ])
+    if notebook_enabled:
+        edge("notebook", "kb", "1  Retrieve API\nQuestion / cited KB answer")
+    if agent_enabled:
+        if agent_detail:
+            edge("notebook", "agent", "Run agent with the question, then display response.text")
+            edge("agent", "mcp_tool", "Execute the model-requested retrieval tool")
+            edge("mcp_tool", "mcp_endpoint", "Streamable HTTP MCP\nknowledge_base_retrieve\napi-key: Search admin key")
+            edge("mcp_endpoint", "kb", "Retrieve extracts from this KB")
+        else:
+            edge("agent", "kb", "Part 5  MCP\nknowledge_base_retrieve\nExtracts, not a KB answer")
+        edge("agent", "models", "Part 5  Direct model call\n" +
+             ("Tool selection and final answer" if agent_detail else "Agent writes the final answer"), "model")
+    if not foundation and not agent:
+        edge("kb", "models", "Parts 1-4  Plan + synthesize" if overview else "Plan + synthesize", "model")
+    if "policy" in attached:
+        if not detailed:
+            edge("pdf", "policy", "Part 1  Upload + ingest", "setup")
+            edge("policy", "models", "Embedding generation", "setup")
+        edge("kb", "policy", "Retrieve policy")
+    if "evidence" in attached:
+        if detailed:
+            edge("kb", "index_sources", "Use two Search index knowledge sources")
+            edge("index_sources", "indexes", "Query existing document indexes")
+        else:
+            edge("kb", "indexes", "Query existing indexes")
+    if fabric_active:
+        if detailed:
+            edge("kb", "fabric_source", "Use Fabric source definition")
+            edge("fabric_source", "ontology", "Live ontology query\nDelegated user authorization")
+        else:
+            edge("kb", "ontology", "Live ontology query\nDelegated user authorization")
+    if "workiq" in attached:
+        if detailed:
+            edge("kb", "workiq_source", "Use Work IQ source definition")
+            edge("workiq_source", "workiq", "Live Work IQ query\nUser assertion")
+        else:
+            edge("kb", "workiq", "Live Work IQ query\nUser assertion")
+    if not agent_detail:
+        edge("ontology", "lakehouse", "Structured relationships / data", "setup")
+        edge("notebook", "entra", "User authentication", "identity", False)
+    lines.append("}")
+    return "\n".join(lines) + "\n"
+
+
+def add_remote_boundaries(lines, cluster, node, fabric_active, fabric_focus,
+                          workiq_active, workiq_focus, detailed):
     cluster("fabric", "FABRIC WORKSPACE  |  separate SaaS boundary", "#157B62", "#F1FAF6")
     node("ontology", "Microsoft Fabric IQ", [
         "Existing ontology relationships",
         "Manufacturer > substance > product",
         "Live source" if fabric_active else "Not connected to this KB",
-    ], "fabric", fabric_active, "fabric" in new)
+    ], "fabric", fabric_active, fabric_focus and not detailed)
     node("lakehouse", "OneLake / lakehouse", ["Existing structured data", "Backed by lab Fabric capacity"], "lakehouse")
     lines.append("}")
 
-    workiq_active = "workiq" in attached
     cluster("m365", "MICROSOFT 365  |  separate SaaS boundary", PURPLE, "#F8F6FC")
     node("workiq", "Work IQ", [
         "Existing workplace context",
         "User-permission-scoped retrieval",
         "Discussion is not contractual approval",
         "Live source" if workiq_active else "Not connected to this KB",
-    ], active=workiq_active, focus="workiq" in new)
+    ], active=workiq_active, focus=workiq_focus and not detailed)
     lines.append("}")
 
     cluster("identity", "TENANT-WIDE IDENTITY  |  not a resource inside the lab resource group", GRAY, "#F7F8FA")
@@ -305,36 +409,6 @@ def build(stage):
     ], "entra")
     lines.append("}")
 
-    # Invisible constraints keep resource boundaries in consistent reading order.
-    lines.extend([
-        'notebook -> kb [style=invis, weight=5];',
-        'kb -> ontology [style=invis, weight=5];',
-        'kb -> workiq [style=invis, weight=5];',
-        '{rank=same; notebook; pdf; entra;' + ("agent;" if overview or agent else "") + "}",
-        '{rank=same; kb; indexes; policy; models;}',
-        '{rank=same; ontology; lakehouse; workiq;}',
-    ])
-    if notebook_enabled:
-        edge("notebook", "kb", "1  Retrieve API\nQuestion / cited KB answer")
-    if agent_enabled:
-        edge("agent", "kb", "Part 5  MCP\nknowledge_base_retrieve\nExtracts, not a KB answer")
-        edge("agent", "models", "Part 5  Direct model call\nAgent writes the final answer", "model")
-    if not foundation and not agent:
-        edge("kb", "models", "Parts 1-4  Plan + synthesize" if overview else "Plan + synthesize", "model")
-    if "policy" in attached:
-        edge("pdf", "policy", "Part 1  Upload + ingest", "setup")
-        edge("policy", "models", "Embedding generation", "setup")
-        edge("kb", "policy", "Retrieve policy")
-    if "evidence" in attached:
-        edge("kb", "indexes", "Query existing indexes")
-    if fabric_active:
-        edge("kb", "ontology", "Live ontology query\nDelegated user authorization")
-    if workiq_active:
-        edge("kb", "workiq", "Live Work IQ query\nUser assertion")
-    edge("ontology", "lakehouse", "Structured relationships / data", "setup")
-    edge("notebook", "entra", "User authentication", "identity", False)
-    lines.append("}")
-    return "\n".join(lines) + "\n"
 
 
 def route_service_connections(svg):
@@ -389,11 +463,12 @@ def route_service_connections(svg):
         y = center(models)
         reroute("policy->models", [(policy[2], center(policy)), (right_lane, center(policy)),
                                   (right_lane, y), (models[2], y)], "right")
-    notebook = bounds("notebook")
-    entra = bounds("entra")
-    lane = min(local[0], entra[0]) - 24
-    reroute("notebook->entra", [(notebook[0], center(notebook)), (lane, center(notebook)),
-                               (lane, center(entra)), (entra[0], center(entra))], "left")
+    if "notebook->entra" in groups:
+        notebook = bounds("notebook")
+        entra = bounds("entra")
+        lane = min(local[0], entra[0]) - 24
+        reroute("notebook->entra", [(notebook[0], center(notebook)), (lane, center(notebook)),
+                                   (lane, center(entra)), (entra[0], center(entra))], "left")
 
     # A white casing makes crossings unambiguous without implying a junction.
     for group in groups.values():
@@ -519,36 +594,37 @@ PART_REVEALS = {
         ),
     },
     4: {
-        "stage": "combined", "focus": ("kb",),
-        "new_edges": ("notebook->kb", "kb->ontology", "kb->workiq", "kb->policy", "kb->indexes", "kb->models"),
+        "stage": "combined", "focus": ("kb", "index_sources", "fabric_source", "workiq_source"),
+        "new_edges": ("notebook->kb", "kb->fabric_source", "kb->workiq_source", "kb->policy",
+                      "kb->index_sources", "kb->models", "index_sources->indexes",
+                      "fabric_source->ontology", "workiq_source->workiq"),
         "covers": {},
         "before": (
             "Part 4 begins: combine the five source roles",
-            "Reuse the document, Fabric and Work IQ source definitions. Create a separate combined KB.",
-            "The orange dashed KB is the build target. Faded sources already exist. Faint arrows show planned wiring.",
+            "Reuse policy and existing data. Create or update four source definitions and build a separate combined KB.",
+            "Dashed orange: configuration to apply. Faded blue: existing data and services, not new deployments.",
         ),
         "after": (
             "Part 4 complete: one five-source configuration",
-            "Built: a separate KB connecting policy, two document indexes, Fabric and Work IQ.",
-            "Orange highlights the new combined KB. Visible connections are configuration, not proof all sources answered.",
+            "Applied: two index definitions, Fabric and Work IQ connections, and a separate five-source KB.",
+            "Orange highlights Search configuration. Fabric and Microsoft 365 stay remote. Check actual query activity.",
         ),
     },
     5: {
-        "stage": "agent", "focus": ("kb", "agent"),
-        "new_edges": ("agent->kb", "agent->models", "kb->policy", "kb->indexes"),
-        "covers": {
-            "cluster_fabric": "Not used by this KB: Fabric IQ",
-            "cluster_m365": "Not used by this KB: Work IQ",
-        },
+        "stage": "agent", "focus": ("kb", "agent", "mcp_tool", "mcp_endpoint"),
+        "new_edges": ("notebook->agent", "agent->mcp_tool", "mcp_tool->mcp_endpoint",
+                      "mcp_endpoint->kb", "agent->models", "kb->policy",
+                      "kb->index_sources", "index_sources->indexes"),
+        "covers": {},
         "before": (
             "Part 5 begins: build an extractive KB and local agent",
-            "Reuse only the three Part 1 sources. Build a new model-free KB and a local MCP agent.",
-            "Orange dashed cards are the build target. Faded services already exist. Fabric and Work IQ stay covered.",
+            "Start with three Part 1 sources and the chat model. Create an extractive KB, tool client and local agent.",
+            "The notebook runs the agent. Search exposes the KB MCP endpoint automatically. Faint paths are planned.",
         ),
         "after": (
             "Part 5 complete: local agent over an extractive KB",
-            "Built: a three-source extractive KB and a local MCP agent. The agent calls the model, not the KB.",
-            "Orange highlights the completed build. No hosted agent, Fabric connection or Work IQ connection is created.",
+            "The notebook runs the agent. Its model selects tools and writes the answer from the MCP evidence.",
+            "MCP uses the Search key. The model uses the OpenAI key. No KB model, hosted agent, Fabric or Work IQ.",
         ),
     },
 }
@@ -562,7 +638,10 @@ def build_part_reveal(part, complete=False):
     ns = "{http://www.w3.org/2000/svg}"
     ET.register_namespace("", ns[1:-1])
     ET.register_namespace("xlink", "http://www.w3.org/1999/xlink")
-    root = ET.fromstring((OUT / f"azure-{stage}.svg").read_text(encoding="utf-8"))
+    root = ET.fromstring(
+        render_architecture(stage, detailed=True) if part in (4, 5)
+        else (OUT / f"azure-{stage}.svg").read_text(encoding="utf-8")
+    )
     graph = root.find(ns + "g")
     groups = {
         group.find(ns + "title").text: group
@@ -572,7 +651,8 @@ def build_part_reveal(part, complete=False):
     replacements = dict(zip(DESCRIPTIONS[stage], descriptions))
     replacements[STAGES[stage][0]] = title
     replacements["Orange boxes: focus of this phase. Gray boxes: not connected to this KB."] = (
-        "Orange: new build. Faded: reused. Covered: not used by this KB."
+        "Orange: configuration in this part. Faded: existing / background."
+        if part in (4, 5) else "Orange: new build. Faded: reused. Covered: not used by this KB."
     )
     for text in graph.findall(ns + "text"):
         if text.text in replacements:
@@ -585,13 +665,21 @@ def build_part_reveal(part, complete=False):
     for text in graph.iter(ns + "text"):
         if text.text == "Connected":
             text.text = "Reused from Part 1"
-        elif not complete and text.text and " connected source definitions" in text.text:
-            text.text = text.text.replace(" connected", " planned")
+        elif text.text and " connected source definitions" in text.text:
+            if part in (4, 5):
+                text.text = text.text.replace("source definitions", "source references")
+            if not complete:
+                text.text = text.text.replace(" connected", " planned")
         elif not complete and text.text == "Live source":
-            text.text = "Planned live connection" if part in (2, 3) else "Existing source definition"
+            text.text = "Planned live connection" if part in (2, 3) else "Existing remote data"
+        elif part == 4 and text.text == "Live source":
+            text.text = "Existing remote data"
+        elif complete and text.text == "Create or update in Step 3":
+            text.text = "Created or updated in Step 3"
 
     for name in ("cluster_identity", "entra", "notebook->entra"):
-        groups[name].set("opacity", "0.18")
+        if name in groups:
+            groups[name].set("opacity", "0.18")
     for name in ("cluster_foundry", "models", "cluster_azure", "cluster_local"):
         groups[name].set("opacity", "0.55")
     for name in ("policy", "indexes"):
@@ -600,12 +688,13 @@ def build_part_reveal(part, complete=False):
         shape.set("fill", "white")
         shape.set("stroke", BLUE)
     for name in ("pdf", "pdf->policy", "policy->models"):
-        groups[name].set("opacity", "0.18")
+        if name in groups:
+            groups[name].set("opacity", "0.18")
     if part == 4:
         for name in ("ontology", "lakehouse", "workiq"):
             groups[name].set("opacity", "0.55")
     if part == 5:
-        groups["notebook"].set("opacity", "0.18")
+        groups["index_sources"].set("opacity", "0.55")
     for name in config["focus"]:
         group = groups[name]
         group.set("opacity", "1")
@@ -649,36 +738,41 @@ def render_part_reveals():
             print(f"Rendered {name}: staged SVG and PNG")
 
 
-def main():
-    check_icons()
+def render_architecture(stage, detailed=False):
     dot = shutil.which("dot")
     if dot is None:
         candidate = Path(r"C:\Program Files\Graphviz\bin\dot.exe")
         if not candidate.is_file():
             raise FileNotFoundError("Graphviz dot.exe is required. See docs/visual-guide.md.")
         dot = str(candidate)
+    result = subprocess.run(
+        [dot, "-Tsvg"], input=build(stage, detailed=detailed), text=True,
+        capture_output=True, cwd=OUT, check=True, timeout=30,
+    )
+    if result.stderr.strip():
+        raise RuntimeError(f"Graphviz reported a rendering problem for {stage}: {result.stderr}")
+    svg = route_service_connections(result.stdout)
+    for icon in ICONS.glob("*.svg"):
+        uri = "data:image/svg+xml;base64," + base64.b64encode(icon.read_bytes()).decode("ascii")
+        svg = svg.replace(f'xlink:href="icons/{icon.stem}.png"', f'xlink:href="{uri}"')
+    if re.search(r'xlink:href="(?!data:)', svg):
+        raise ValueError(f"{stage} is not self-contained")
+    description = (
+        " ".join(DESCRIPTIONS[stage]) + " Service architecture with official Azure, Fabric and Entra icons. "
+        "Separate local device, Azure resource group, Fabric workspace, Microsoft 365 and identity boundaries. "
+        "Arrows point from caller to dependency. This is not a live deployment status."
+    )
+    return svg.replace("<svg ", '<svg role="img" aria-label="' + escape(description) + '" ', 1)
+
+
+def main():
+    check_icons()
     for icon in ICONS.glob("*.svg"):
         icon.with_suffix(".png").write_bytes(resvg_py.svg_to_bytes(svg_path=str(icon), width=112, height=112))
     for stage in ["overview", *STAGES]:
         name = f"azure-{stage}"
         source = build(stage)
-        result = subprocess.run(
-            [dot, "-Tsvg"], input=source, text=True, capture_output=True, cwd=OUT, check=True, timeout=30,
-        )
-        if result.stderr.strip():
-            raise RuntimeError(f"Graphviz reported a rendering problem for {name}: {result.stderr}")
-        svg = route_service_connections(result.stdout)
-        for icon in ICONS.glob("*.svg"):
-            uri = "data:image/svg+xml;base64," + base64.b64encode(icon.read_bytes()).decode("ascii")
-            svg = svg.replace(f'xlink:href="icons/{icon.stem}.png"', f'xlink:href="{uri}"')
-        if re.search(r'xlink:href="(?!data:)', svg):
-            raise ValueError(f"{name} is not self-contained")
-        description = (
-            " ".join(DESCRIPTIONS[stage]) + " Service architecture with official Azure, Fabric and Entra icons. "
-            "Separate local device, Azure resource group, Fabric workspace, Microsoft 365 and identity boundaries. "
-            "Arrows point from caller to dependency. This is not a live deployment status."
-        )
-        svg = svg.replace("<svg ", '<svg role="img" aria-label="' + escape(description) + '" ', 1)
+        svg = render_architecture(stage)
         (OUT / f"{name}.dot").write_text(source, encoding="utf-8")
         (OUT / f"{name}.svg").write_text(svg, encoding="utf-8")
         (OUT / f"{name}.png").write_bytes(resvg_py.svg_to_bytes(svg_string=svg, width=1800, dpi=96))

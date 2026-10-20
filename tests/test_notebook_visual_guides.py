@@ -350,10 +350,12 @@ class AzureArchitectureTests(unittest.TestCase):
                     )
                     root = ET.fromstring(svg)
                     text = " ".join(root.itertext())
-                    self.assertIn("Faded: reused", text)
+                    self.assertIn("Faded: existing / background" if part in (4, 5)
+                                  else "Faded: reused", text)
                     self.assertNotIn("Gray boxes: not connected", text)
-                    self.assertIn("connected source definitions" if complete
-                                  else "planned source definitions", text)
+                    membership = "connected" if complete else "planned"
+                    source_kind = "references" if part in (4, 5) else "definitions"
+                    self.assertIn(f"{membership} source {source_kind}", text)
                     groups = {
                         group.find(ns + "title").text: group
                         for group in root.iter(ns + "g")
@@ -376,11 +378,15 @@ class AzureArchitectureTests(unittest.TestCase):
                     for node in ("policy", "indexes", "models"):
                         self.assertEqual(groups[node].attrib["opacity"], "0.55")
                     for node in ("cluster_identity", "entra", "notebook->entra"):
-                        self.assertEqual(groups[node].attrib["opacity"], "0.18")
+                        if part == 5:
+                            self.assertNotIn(node, groups)
+                        else:
+                            self.assertEqual(groups[node].attrib["opacity"], "0.18")
                     for node in ("cluster_foundry", "cluster_azure", "cluster_local"):
                         self.assertEqual(groups[node].attrib["opacity"], "0.55")
                     for node in ("policy", "indexes"):
-                        self.assertEqual(groups[node].find(ns + "path").attrib["stroke"], self.generator.BLUE)
+                        self.assertEqual(groups[node].find(ns + "path").attrib["stroke"].lower(),
+                                         self.generator.BLUE.lower())
                     if part == 5:
                         self.assertNotIn("kb->models", groups)
                         self.assertIn("agent->models", groups)
@@ -391,6 +397,54 @@ class AzureArchitectureTests(unittest.TestCase):
                     self.assertEqual(int.from_bytes(png[16:20], "big"), 1800)
                     images.append(png)
             self.assertNotEqual(*images)
+
+    def test_part4_separates_updated_search_definitions_from_existing_data(self):
+        ns = "{http://www.w3.org/2000/svg}"
+        for complete in (False, True):
+            root = ET.fromstring(self.generator.build_part_reveal(4, complete))
+            groups = {
+                group.find(ns + "title").text: group
+                for group in root.iter(ns + "g")
+                if group.find(ns + "title") is not None
+            }
+            for node in ("index_sources", "fabric_source", "workiq_source", "kb"):
+                self.assertEqual(groups[node].attrib["data-build-state"],
+                                 "completed" if complete else "planned")
+            for node in ("indexes", "policy", "ontology", "lakehouse", "workiq"):
+                self.assertEqual(groups[node].attrib["opacity"], "0.55")
+                self.assertEqual(groups[node].find(ns + "path").attrib["stroke"].lower(),
+                                 self.generator.BLUE.lower())
+                self.assertNotIn("data-build-state", groups[node].attrib)
+            for edge in ("kb->index_sources", "index_sources->indexes", "kb->fabric_source",
+                         "fabric_source->ontology", "kb->workiq_source", "workiq_source->workiq"):
+                self.assertIn(edge, groups)
+            self.assertNotIn("pdf", groups)
+            self.assertNotIn("policy->models", groups)
+
+    def test_part5_runs_in_notebook_with_explicit_key_authenticated_mcp_path(self):
+        ns = "{http://www.w3.org/2000/svg}"
+        for complete in (False, True):
+            root = ET.fromstring(self.generator.build_part_reveal(5, complete))
+            text = " ".join(root.itertext())
+            groups = {
+                group.find(ns + "title").text: group
+                for group in root.iter(ns + "g")
+                if group.find(ns + "title") is not None
+            }
+            for edge in ("notebook->agent", "agent->models", "agent->mcp_tool",
+                         "mcp_tool->mcp_endpoint", "mcp_endpoint->kb",
+                         "kb->policy", "kb->index_sources", "index_sources->indexes"):
+                self.assertEqual(groups[edge].attrib["opacity"], "1" if complete else "0.12")
+            for omitted in ("kb->models", "notebook->kb", "notebook->entra", "pdf",
+                            "ontology", "workiq", "policy->models"):
+                self.assertNotIn(omitted, groups)
+            self.assertNotIn("opacity", groups["notebook"].attrib)
+            for phrase in ("Runs the agent + displays its answer", "knowledge_base_retrieve only",
+                           "Search key in api-key header", "Azure OpenAI key authentication",
+                           "Exposed automatically by Search", "extractiveData / minimal / no model"):
+                self.assertIn(phrase, text)
+            self.assertNotIn("Other parts: reference only", text)
+            self.assertNotIn("The agent calls the model, not the KB", text)
 
     def test_shared_descriptions_match_diagrams_and_notebook_captions(self):
         descriptions = json.loads(
@@ -457,9 +511,11 @@ class AzureArchitectureTests(unittest.TestCase):
             numbers = [float(n) for n in re.findall(r"-?\d+(?:\.\d+)?", path.attrib["d"])]
             return list(zip(numbers[::2], numbers[1::2]))
 
-        for stage in ("overview", *self.generator.STAGES):
+        for stage in ("overview", *self.generator.STAGES, "part4-before", "part4-after",
+                      "part5-before", "part5-after"):
+            filename = stage if stage.startswith("part") else f"azure-{stage}"
             svg = ET.fromstring(
-                (self.generator.OUT / f"azure-{stage}.svg").read_text(encoding="utf-8")
+                (self.generator.OUT / f"{filename}.svg").read_text(encoding="utf-8")
             )
             nodes = {}
             edges = []
