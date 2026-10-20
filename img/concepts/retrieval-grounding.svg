@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="800" viewBox="0 0 1440 800" role="img" aria-labelledby="title desc">
+<title id="title">Why retrieve before asking a model to answer?</title>
+<desc id="desc">Retrieval supplies your organization&#x27;s evidence. It does not make every answer correct.</desc>
+<rect width="1440" height="800" fill="white"/>
+<text x="40" y="54" fill="#000000" font-size="30" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="40" dy="0">Why retrieve before asking a model to answer?</tspan></text>
+<text x="40" y="101" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">Retrieval supplies your organization&#x27;s evidence. It does not make every answer correct.</tspan></text>
+<text x="40" y="767" fill="#000000" font-size="17" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">CONCEPT ILLUSTRATION | Not a portal view, deployed state or saved query result.</tspan></text>
+<rect x="40" y="165" width="400" height="210" rx="12" fill="#F1F4F7" stroke="#657687" stroke-width="2"/>
+<text x="60" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="60" dy="0">Without retrieval</tspan></text>
+<text x="60" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="60" dy="0">Question &gt; model knowledge</tspan><tspan x="60" dy="27.55">No access to your lab records</tspan></text>
+<rect x="40" y="455" width="400" height="195" rx="12" fill="#F1F4F7" stroke="#657687" stroke-width="2"/>
+<text x="60" y="493" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="60" dy="0">Hard to verify</tspan></text>
+<text x="60" y="548" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="60" dy="0">Fluent wording is not evidence.</tspan><tspan x="60" dy="27.55">Ask what supports each claim.</tspan></text>
+<polyline points="240,375 240,455" fill="none" stroke="#657687" stroke-width="3"/>
+<polyline points="234,445 240,455 246,445" fill="none" stroke="#657687" stroke-width="3"/>
+<rect x="520" y="165" width="880" height="155" rx="12" fill="#EAF4FC" stroke="#0078D4" stroke-width="2"/>
+<text x="540" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="540" dy="0">With retrieval</tspan></text>
+<text x="540" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="540" dy="0">Question &gt; retrieve relevant source material</tspan></text>
+<polyline points="960,320 960,380" fill="none" stroke="#0078D4" stroke-width="3"/>
+<polyline points="954,370 960,380 966,370" fill="none" stroke="#0078D4" stroke-width="3"/>
+<rect x="520" y="380" width="880" height="155" rx="12" fill="#E7F4EC" stroke="#107C41" stroke-width="2"/>
+<text x="540" y="418" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="540" dy="0">Model reads the evidence</tspan></text>
+<text x="540" y="473" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="540" dy="0">Answer + references + retrieval activity</tspan></text>
+<text x="540" y="601" fill="#000000" font-size="21" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="540" dy="0">Agentic retrieval can add model-based query planning and source</tspan><tspan x="540" dy="30.45">selection.</tspan><tspan x="540" dy="30.45">Inspect errors and citations even when the answer sounds</tspan><tspan x="540" dy="30.45">convincing.</tspan></text>
+</svg>

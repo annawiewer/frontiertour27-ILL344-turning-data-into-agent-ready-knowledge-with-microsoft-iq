@@ -1,10 +1,5 @@
-# Docs
+# Supporting documentation
 
-<!-- AI TOUR TEMPLATE PLACEHOLDER: remove this folder when the session needs no additional documentation. -->
-
-Use this folder for supporting documentation such as reference material and
-architecture/context.
-
-If this repository intentionally uses MkDocs or another docs-site pattern,
-attendee instructions can remain here. Link the attendee entry point clearly
-from the root README.
+- [Visual field guide](visual-guide.md): architecture stages, notebook checkpoints, portal observations, and safe screenshot capture.
+- [Attendee setup and notebook sequence](../instructions/overview.md).
+- [Notebook index](../src/README.md).

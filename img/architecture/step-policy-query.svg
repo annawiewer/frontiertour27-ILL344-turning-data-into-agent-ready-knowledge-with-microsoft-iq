@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="350" viewBox="0 0 1560 350" role="img" aria-labelledby="title desc">
+<title id="title">Retrieve policy evidence and synthesize a cited answer</title><desc id="desc">SECTION MAP | Orange: current focus. Blue: context. Read left to right.</desc>
+<rect width="1560" height="350" fill="#ffffff"/>
+<text x="30" y="38" fill="#000000" font-size="26" font-family="Segoe UI,Arial,sans-serif"><tspan x="30" dy="0">Retrieve policy evidence and synthesize a cited answer</tspan></text>
+<text x="30" y="74" fill="#000000" font-size="16" font-family="Segoe UI,Arial,sans-serif"><tspan x="30" dy="0">SECTION MAP | Orange: current focus. Blue: context. Read left to right.</tspan></text>
+<rect x="30" y="110" width="345" height="135" rx="12" fill="#CFE4FA" stroke="#0078D4" stroke-width="2"/>
+<text x="46" y="139" fill="#000000" font-size="15" font-family="Segoe UI,Arial,sans-serif"><tspan x="46" dy="0">LOCAL | Question</tspan><tspan x="46" dy="22.5">Ask about purchasing policy</tspan><tspan x="46" dy="22.5">Call the Search retrieve API</tspan></text>
+<rect x="415" y="110" width="345" height="135" rx="12" fill="#FFF4CE" stroke="#F7630C" stroke-width="2"/>
+<text x="431" y="139" fill="#000000" font-size="15" font-family="Segoe UI,Arial,sans-serif"><tspan x="431" dy="0">SEARCH | Policy KB</tspan><tspan x="431" dy="22.5">One file knowledge source</tspan><tspan x="431" dy="22.5">Retrieve policy evidence</tspan></text>
+<rect x="800" y="110" width="345" height="135" rx="12" fill="#CFE4FA" stroke="#0078D4" stroke-width="2"/>
+<text x="816" y="139" fill="#000000" font-size="15" font-family="Segoe UI,Arial,sans-serif"><tspan x="816" dy="0">OPENAI | Attached model</tspan><tspan x="816" dy="22.5">Plan retrieval and synthesize</tspan><tspan x="816" dy="22.5">Runs through the KB</tspan></text>
+<rect x="1185" y="110" width="345" height="135" rx="12" fill="#CFE4FA" stroke="#0078D4" stroke-width="2"/>
+<text x="1201" y="139" fill="#000000" font-size="15" font-family="Segoe UI,Arial,sans-serif"><tspan x="1201" dy="0">LOCAL | Answer and evidence</tspan><tspan x="1201" dy="22.5">Inspect activity and references</tspan><tspan x="1201" dy="22.5">Match citations to claims</tspan></text>
+<polyline points="375,175 415,175" fill="none" stroke="#0078D4" stroke-width="2"/><polyline points="406,170 415,175 406,180" fill="none" stroke="#0078D4" stroke-width="2"/>
+<polyline points="760,175 800,175" fill="none" stroke="#0078D4" stroke-width="2"/><polyline points="791,170 800,175 791,180" fill="none" stroke="#0078D4" stroke-width="2"/>
+<polyline points="1145,175 1185,175" fill="none" stroke="#0078D4" stroke-width="2"/><polyline points="1176,170 1185,175 1176,180" fill="none" stroke="#0078D4" stroke-width="2"/>
+<text x="30" y="301" fill="#000000" font-size="16" font-family="Segoe UI,Arial,sans-serif"><tspan x="30" dy="0">Learning sequence, not a live status report. Use the section&#x27;s read-back and evidence checks.</tspan></text>
+</svg>

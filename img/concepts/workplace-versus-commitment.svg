@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="790" viewBox="0 0 1440 790" role="img" aria-labelledby="title desc">
+<title id="title">Workplace updates and approved commitments</title>
+<desc id="desc">Compare the evidence. Do not silently turn a discussion into a contractual change.</desc>
+<rect width="1440" height="790" fill="white"/>
+<text x="40" y="54" fill="#000000" font-size="30" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="40" dy="0">Workplace updates and approved commitments</tspan></text>
+<text x="40" y="101" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">Compare the evidence. Do not silently turn a discussion into a contractual change.</tspan></text>
+<text x="40" y="757" fill="#000000" font-size="17" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">CONCEPT ILLUSTRATION | Not a portal view, deployed state or saved query result.</tspan></text>
+<rect x="40" y="175" width="540" height="340" rx="12" fill="#F9EAF5" stroke="#A32988" stroke-width="2"/>
+<text x="60" y="213" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="60" dy="0">Work IQ context</tspan></text>
+<text x="60" y="268" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="60" dy="0">Current actions and owners</tspan><tspan x="60" dy="27.55">Deadlines people are discussing</tspan><tspan x="60" dy="27.55">Unresolved approvals and risks</tspan><tspan x="60" dy="27.55"></tspan><tspan x="60" dy="27.55">Only what the user may access</tspan></text>
+<rect x="860" y="175" width="540" height="340" rx="12" fill="#FFF4D9" stroke="#A96C00" stroke-width="2"/>
+<text x="880" y="213" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="880" dy="0">Approved sourcing records</tspan></text>
+<text x="880" y="268" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="880" dy="0">Agreement and amendment terms</tspan><tspan x="880" dy="27.55">Purchase-order commitments</tspan><tspan x="880" dy="27.55">Approved quantities and dates</tspan><tspan x="880" dy="27.55"></tspan><tspan x="880" dy="27.55">Check the actual cited record</tspan></text>
+<polyline points="580,440 860,440" fill="none" stroke="#657687" stroke-width="3"/>
+<polyline points="850,434 860,440 850,446" fill="none" stroke="#657687" stroke-width="3"/>
+<polyline points="860,490 580,490" fill="none" stroke="#657687" stroke-width="3"/>
+<polyline points="590,484 580,490 590,496" fill="none" stroke="#657687" stroke-width="3"/>
+<text x="610" y="211" fill="#000000" font-size="21" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="610" dy="0">COMPARE</tspan><tspan x="610" dy="30.45">Owner</tspan><tspan x="610" dy="30.45">Deadline</tspan><tspan x="610" dy="30.45">Decision</tspan><tspan x="610" dy="30.45">Conflict</tspan></text>
+<rect x="40" y="575" width="1360" height="110" rx="12" fill="#F1F4F7" stroke="#657687" stroke-width="2"/>
+<text x="65" y="619" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="65" dy="0">If an update conflicts with a commitment, report the conflict and the missing decision.</tspan><tspan x="65" dy="31.9">Do not claim that the update changed the approved record.</tspan></text>
+</svg>

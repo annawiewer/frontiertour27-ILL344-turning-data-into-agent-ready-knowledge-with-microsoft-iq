@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="980" viewBox="0 0 1440 980" role="img" aria-labelledby="title desc">
+<title id="title">Azure resource containers and identity</title>
+<desc id="desc">A simplified orientation map. Not every workload is nested inside an Azure resource group.</desc>
+<rect width="1440" height="980" fill="white"/>
+<text x="40" y="54" fill="#000000" font-size="30" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="40" dy="0">Azure resource containers and identity</tspan></text>
+<text x="40" y="101" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">A simplified orientation map. Not every workload is nested inside an Azure resource group.</tspan></text>
+<text x="40" y="947" fill="#000000" font-size="17" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">CONCEPT ILLUSTRATION | Not a portal view, deployed state or saved query result.</tspan></text>
+<rect x="40" y="155" width="1360" height="650" rx="12" fill="none" stroke="#657687" stroke-width="2"/>
+<text x="65" y="200" fill="#000000" font-size="25" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="65" dy="0">Tenant: organization identity boundary in Microsoft Entra ID</tspan></text>
+<rect x="70" y="245" width="1300" height="330" rx="12" fill="none" stroke="#0078D4" stroke-width="2"/>
+<text x="95" y="288" fill="#000000" font-size="23" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="95" dy="0">Azure subscription: billing and access scope</tspan></text>
+<rect x="100" y="335" width="1240" height="210" rx="12" fill="none" stroke="#0078D4" stroke-width="2"/>
+<text x="125" y="372" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="125" dy="0">Resource group: lifecycle and management grouping</tspan></text>
+<rect x="125" y="425" width="560" height="85" rx="12" fill="#EAF4FC" stroke="#0078D4" stroke-width="2"/>
+<text x="145" y="465" fill="#000000" font-size="23" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="145" dy="0">Azure AI Search service</tspan></text>
+<rect x="735" y="425" width="580" height="85" rx="12" fill="#F1ECF8" stroke="#7052A3" stroke-width="2"/>
+<text x="755" y="465" fill="#000000" font-size="23" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="755" dy="0">Model-hosting Azure resources</tspan></text>
+<rect x="70" y="630" width="620" height="120" rx="12" fill="#E7F4EC" stroke="#107C41" stroke-width="2"/>
+<text x="95" y="672" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="95" dy="0">Fabric workspace</tspan><tspan x="95" dy="31.9">Separate data and permission boundary</tspan></text>
+<rect x="750" y="630" width="620" height="120" rx="12" fill="#F9EAF5" stroke="#A32988" stroke-width="2"/>
+<text x="775" y="672" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="775" dy="0">Microsoft 365</tspan><tspan x="775" dy="31.9">User-scoped workplace content</tspan></text>
+<text x="65" y="872" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="65" dy="0">A resource endpoint tells you where to call. A credential proves identity or access.</tspan><tspan x="65" dy="31.9">Permissions still determine what that identity can do.</tspan></text>
+</svg>

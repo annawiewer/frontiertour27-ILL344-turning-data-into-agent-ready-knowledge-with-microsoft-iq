@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="930" viewBox="0 0 1440 930" role="img" aria-labelledby="title desc">
+<title id="title">Who writes the final answer?</title>
+<desc id="desc">Reasoning effort and output mode are different settings. These are the two lab patterns.</desc>
+<rect width="1440" height="930" fill="white"/>
+<text x="40" y="54" fill="#000000" font-size="30" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="40" dy="0">Who writes the final answer?</tspan></text>
+<text x="40" y="101" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">Reasoning effort and output mode are different settings. These are the two lab patterns.</tspan></text>
+<text x="40" y="897" fill="#000000" font-size="17" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">CONCEPT ILLUSTRATION | Not a portal view, deployed state or saved query result.</tspan></text>
+<rect x="40" y="165" width="650" height="210" rx="12" fill="#EAF4FC" stroke="#0078D4" stroke-width="2"/>
+<text x="60" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="60" dy="0">Parts 1-4: KB synthesis</tspan></text>
+<text x="60" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="60" dy="0">Multi-source KBs use low reasoning.</tspan><tspan x="60" dy="27.55">Output: answerSynthesis</tspan><tspan x="60" dy="27.55">The KB calls its attached chat model.</tspan></text>
+<rect x="750" y="165" width="650" height="210" rx="12" fill="#F1ECF8" stroke="#7052A3" stroke-width="2"/>
+<text x="770" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="770" dy="0">Part 5: agent synthesis</tspan></text>
+<text x="770" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="770" dy="0">KB uses minimal reasoning.</tspan><tspan x="770" dy="27.55">Output: extractiveData</tspan><tspan x="770" dy="27.55">No chat model is attached to this KB.</tspan></text>
+<rect x="40" y="470" width="650" height="175" rx="12" fill="#EAF4FC" stroke="#0078D4" stroke-width="2"/>
+<text x="60" y="508" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="60" dy="0">Answer, references, activity</tspan></text>
+<text x="60" y="563" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="60" dy="0">Inspect the KB&#x27;s response and source evidence.</tspan></text>
+<rect x="750" y="470" width="650" height="175" rx="12" fill="#F1ECF8" stroke="#7052A3" stroke-width="2"/>
+<text x="770" y="508" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="770" dy="0">Evidence over MCP</tspan></text>
+<text x="770" y="563" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="770" dy="0">The local agent calls its own model to answer.</tspan></text>
+<polyline points="365,375 365,470" fill="none" stroke="#0078D4" stroke-width="3"/>
+<polyline points="359,460 365,470 371,460" fill="none" stroke="#0078D4" stroke-width="3"/>
+<polyline points="1075,375 1075,470" fill="none" stroke="#7052A3" stroke-width="3"/>
+<polyline points="1069,460 1075,470 1081,460" fill="none" stroke="#7052A3" stroke-width="3"/>
+<text x="65" y="727" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="65" dy="0">Part 5 uses only the three Part 1 source types, not the five-source Part 4 KB.</tspan><tspan x="65" dy="31.9">MCP is the tool protocol. The agent runs in your notebook, not as a hosted Foundry agent.</tspan></text>
+</svg>

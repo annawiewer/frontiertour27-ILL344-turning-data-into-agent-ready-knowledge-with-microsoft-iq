@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="750" viewBox="0 0 1440 750" role="img" aria-labelledby="title desc">
+<title id="title">Five evidence roles, five different questions</title>
+<desc id="desc">A useful briefing keeps the authority of each source visible.</desc>
+<rect width="1440" height="750" fill="white"/>
+<text x="40" y="54" fill="#000000" font-size="30" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="40" dy="0">Five evidence roles, five different questions</tspan></text>
+<text x="40" y="101" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">A useful briefing keeps the authority of each source visible.</tspan></text>
+<text x="40" y="717" fill="#000000" font-size="17" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">CONCEPT ILLUSTRATION | Not a portal view, deployed state or saved query result.</tspan></text>
+<rect x="40" y="165" width="256" height="285" rx="12" fill="#F1ECF8" stroke="#7052A3" stroke-width="2"/>
+<text x="60" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="60" dy="0">Policy</tspan></text>
+<text x="60" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="60" dy="0">What rule applies?</tspan><tspan x="60" dy="27.55"></tspan><tspan x="60" dy="27.55">Purchasing</tspan><tspan x="60" dy="27.55">controls</tspan><tspan x="60" dy="27.55">Escalation</tspan><tspan x="60" dy="27.55">responsibilities</tspan></text>
+<polyline points="168,450 168,515" fill="none" stroke="#7052A3" stroke-width="3"/>
+<polyline points="162,505 168,515 174,505" fill="none" stroke="#7052A3" stroke-width="3"/>
+<rect x="316" y="165" width="256" height="285" rx="12" fill="#E5F5F4" stroke="#00838A" stroke-width="2"/>
+<text x="336" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="336" dy="0">Supplier</tspan><tspan x="336" dy="31.9">evidence</tspan></text>
+<text x="336" y="282.8" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="336" dy="0">What happened?</tspan><tspan x="336" dy="27.55"></tspan><tspan x="336" dy="27.55">Invoices and</tspan><tspan x="336" dy="27.55">quality records</tspan><tspan x="336" dy="27.55">Shipment</tspan><tspan x="336" dy="27.55">observations</tspan></text>
+<polyline points="444,450 444,515" fill="none" stroke="#00838A" stroke-width="3"/>
+<polyline points="438,505 444,515 450,505" fill="none" stroke="#00838A" stroke-width="3"/>
+<rect x="592" y="165" width="256" height="285" rx="12" fill="#FFF4D9" stroke="#A96C00" stroke-width="2"/>
+<text x="612" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="612" dy="0">Commitments</tspan></text>
+<text x="612" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="612" dy="0">What was approved?</tspan><tspan x="612" dy="27.55"></tspan><tspan x="612" dy="27.55">Agreements and</tspan><tspan x="612" dy="27.55">amendments</tspan><tspan x="612" dy="27.55">Purchase orders</tspan></text>
+<polyline points="720,450 720,515" fill="none" stroke="#A96C00" stroke-width="3"/>
+<polyline points="714,505 720,515 726,505" fill="none" stroke="#A96C00" stroke-width="3"/>
+<rect x="868" y="165" width="256" height="285" rx="12" fill="#E7F4EC" stroke="#107C41" stroke-width="2"/>
+<text x="888" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="888" dy="0">Relationships</tspan></text>
+<text x="888" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="888" dy="0">What connects to</tspan><tspan x="888" dy="27.55">what?</tspan><tspan x="888" dy="27.55"></tspan><tspan x="888" dy="27.55">Manufacturer and</tspan><tspan x="888" dy="27.55">substance</tspan><tspan x="888" dy="27.55">Substance and</tspan><tspan x="888" dy="27.55">product</tspan></text>
+<polyline points="996,450 996,515" fill="none" stroke="#107C41" stroke-width="3"/>
+<polyline points="990,505 996,515 1002,505" fill="none" stroke="#107C41" stroke-width="3"/>
+<rect x="1144" y="165" width="256" height="285" rx="12" fill="#F9EAF5" stroke="#A32988" stroke-width="2"/>
+<text x="1164" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="1164" dy="0">Workplace</tspan></text>
+<text x="1164" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="1164" dy="0">What is being</tspan><tspan x="1164" dy="27.55">discussed?</tspan><tspan x="1164" dy="27.55"></tspan><tspan x="1164" dy="27.55">Current actions</tspan><tspan x="1164" dy="27.55">and owners</tspan><tspan x="1164" dy="27.55">Open decisions</tspan></text>
+<polyline points="1272,450 1272,515" fill="none" stroke="#A32988" stroke-width="3"/>
+<polyline points="1266,505 1272,515 1278,505" fill="none" stroke="#A32988" stroke-width="3"/>
+<rect x="40" y="520" width="1360" height="135" rx="12" fill="none" stroke="#0078D4" stroke-width="2"/>
+<text x="65" y="565" fill="#000000" font-size="25" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="65" dy="0">One briefing, with evidence labels and citations</tspan></text>
+<text x="65" y="611" fill="#000000" font-size="20" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="65" dy="0">A message does not amend a contract. A document mention does not establish an ontology relationship.</tspan></text>
+</svg>

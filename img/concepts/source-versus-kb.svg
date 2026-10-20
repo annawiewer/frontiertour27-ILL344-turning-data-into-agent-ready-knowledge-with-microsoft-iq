@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="840" viewBox="0 0 1440 840" role="img" aria-labelledby="title desc">
+<title id="title">A knowledge source is not a knowledge base</title>
+<desc id="desc">A source defines how to reach evidence. A KB coordinates the source connections.</desc>
+<rect width="1440" height="840" fill="white"/>
+<text x="40" y="54" fill="#000000" font-size="30" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="40" dy="0">A knowledge source is not a knowledge base</tspan></text>
+<text x="40" y="101" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">A source defines how to reach evidence. A KB coordinates the source connections.</tspan></text>
+<text x="40" y="807" fill="#000000" font-size="17" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">CONCEPT ILLUSTRATION | Not a portal view, deployed state or saved query result.</tspan></text>
+<rect x="40" y="165" width="390" height="240" rx="12" fill="#F1F4F7" stroke="#657687" stroke-width="2"/>
+<text x="60" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="60" dy="0">Evidence location</tspan></text>
+<text x="60" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="60" dy="0">Uploaded policy</tspan><tspan x="60" dy="27.55">Existing Search index</tspan><tspan x="60" dy="27.55">Remote Fabric or Work IQ</tspan></text>
+<rect x="525" y="165" width="390" height="240" rx="12" fill="#E5F5F4" stroke="#00838A" stroke-width="2"/>
+<text x="545" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="545" dy="0">Knowledge source</tspan></text>
+<text x="545" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="545" dy="0">Name and useful description</tspan><tspan x="545" dy="27.55">Source kind</tspan><tspan x="545" dy="27.55">Connection configuration</tspan></text>
+<rect x="1010" y="165" width="390" height="240" rx="12" fill="#EAF4FC" stroke="#0078D4" stroke-width="2"/>
+<text x="1030" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="1030" dy="0">Knowledge base</tspan></text>
+<text x="1030" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="1030" dy="0">References to sources</tspan><tspan x="1030" dy="27.55">Retrieval settings</tspan><tspan x="1030" dy="27.55">Optional model and output</tspan></text>
+<polyline points="430,285 525,285" fill="none" stroke="#0078D4" stroke-width="3"/>
+<polyline points="515,279 525,285 515,291" fill="none" stroke="#0078D4" stroke-width="3"/>
+<polyline points="915,285 1010,285" fill="none" stroke="#0078D4" stroke-width="3"/>
+<polyline points="1000,279 1010,285 1000,291" fill="none" stroke="#0078D4" stroke-width="3"/>
+<rect x="40" y="475" width="1360" height="195" rx="12" fill="#EAF4FC" stroke="#0078D4" stroke-width="2"/>
+<text x="60" y="513" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="60" dy="0">Reuse connections, compare different KBs</tspan></text>
+<text x="60" y="568" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="60" dy="0">Part 2: three document sources + Fabric. Part 3: three document sources + Work IQ.</tspan><tspan x="60" dy="27.55">Part 4: all five. Part 5: three document sources, with extractive output.</tspan></text>
+<text x="65" y="724" fill="#000000" font-size="20" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="65" dy="0">Sources do not universally hold the data. Remote source definitions are connections, not bulk copies.</tspan></text>
+</svg>

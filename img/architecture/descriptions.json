@@ -1,0 +1,10 @@
+{
+  "overview": "A local notebook asks Search to retrieve policy, indexed documents and live Fabric / Work IQ data. Parts 1-4 use the KB model for answers. In Part 5, a local MCP agent writes the final answer.",
+  "start": "Search, model deployments, indexed documents and remote data already exist in the lab. The notebook is a local client. The attendee has not created a knowledge base yet.",
+  "policy": "Part 1 uploads the purchasing policy and connects it to a dedicated Search knowledge base. The KB retrieves policy evidence and calls the existing model to return a cited answer.",
+  "documents": "A separate Search knowledge base connects policy with two preloaded document indexes. The KB combines the three evidence sources and uses its model to return a cited answer.",
+  "fabric": "This KB adds live Fabric ontology relationships to the three Part 1 evidence sources. Fabric data stays in its workspace. Queries require delegated user access, not a data copy.",
+  "workiq": "This KB adds permission-scoped Work IQ context to the three Part 1 sources, without Fabric. Workplace discussions complement document evidence but do not establish contractual approval.",
+  "combined": "This KB connects all five source roles: policy, two document indexes, Fabric and Work IQ. Search retrieves the evidence and calls its model to produce a cross-source, cited briefing.",
+  "agent": "A local Python agent calls an extractive three-source KB through knowledge_base_retrieve. The KB has no model. The agent calls Azure OpenAI for the final answer. No hosted agent is created."
+}

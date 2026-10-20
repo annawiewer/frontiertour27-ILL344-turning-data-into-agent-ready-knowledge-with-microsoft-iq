@@ -1,0 +1,53 @@
+{
+  "retrieved": "2026-10-19",
+  "usage": "Unmodified official Microsoft icons for architecture diagrams and training documentation. Microsoft reserves all other rights.",
+  "terms": [
+    "https://learn.microsoft.com/azure/architecture/icons/",
+    "https://learn.microsoft.com/fabric/fundamentals/icons",
+    "https://learn.microsoft.com/entra/architecture/architecture-icons"
+  ],
+  "icons": {
+    "search": {
+      "file": "search.svg",
+      "source": "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V24.zip",
+      "archive_entry": "Azure_Public_Service_Icons/Icons/ai + machine learning/10044-icon-service-Cognitive-Search.svg",
+      "sha256": "f7af1213ce089236593835cb5564d6d3f01358cba6488fe562aa8bbc8adc3b38"
+    },
+    "foundry": {
+      "file": "foundry.svg",
+      "source": "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V24.zip",
+      "archive_entry": "Azure_Public_Service_Icons/Icons/ai + machine learning/035746832-icon-service-AI-Foundry.svg",
+      "sha256": "fab039a771f72780ae34e59065d61c66a02d3c347d50923ef2956f34912ea02c"
+    },
+    "foundry-iq": {
+      "file": "foundry-iq.svg",
+      "source": "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V24.zip",
+      "archive_entry": "Azure_Public_Service_Icons/Icons/ai + machine learning/038470497-icon-service-Azure-AI-Foundry-IQ.svg",
+      "sha256": "245e33416ecc1c745bfff6f72ebf1ffa04cfee1cdd0c1b1b8970d0844409c9c7"
+    },
+    "browser": {
+      "file": "browser.svg",
+      "source": "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V24.zip",
+      "archive_entry": "Azure_Public_Service_Icons/Icons/general/10783-icon-service-Browser.svg",
+      "sha256": "d08afad9e64b5f69d5689bc831aefe7619150ba0a80583651bb5d75e4c033630"
+    },
+    "entra": {
+      "file": "entra.svg",
+      "source": "https://learn.microsoft.com/en-us/entra/architecture/architecture-icons",
+      "archive_entry": "Microsoft Entra architecture icons - Oct 2023/Microsoft Entra color icons SVG/Microsoft Entra ID color icon.svg",
+      "sha256": "efd9f54562bfb78bf3c77aecdd5fc31b61fce8a1cec78c4370b41fc470e54eda"
+    },
+    "fabric": {
+      "file": "fabric.svg",
+      "source": "https://github.com/microsoft/fabric-samples/blob/main/docs-samples/Icons.zip",
+      "archive_entry": "v6.1.0/package/dist/svg/fabric_48_color.svg",
+      "sha256": "ef80d2edbfc1b045241d2e9550b7930b648d8018e0274116a3df6d6ccf3adbf9"
+    },
+    "lakehouse": {
+      "file": "lakehouse.svg",
+      "source": "https://github.com/microsoft/fabric-samples/blob/main/docs-samples/Icons.zip",
+      "archive_entry": "v6.1.0/package/dist/svg/lakehouse_48_item.svg",
+      "sha256": "7f4ba4303e8f507d4ec8e47bc055bace80eb9715ccc58df40021b776a3c65f08"
+    }
+  }
+}

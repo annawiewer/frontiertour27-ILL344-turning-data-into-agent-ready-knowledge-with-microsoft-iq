@@ -1,0 +1,61 @@
+digraph Architecture {
+graph [rankdir=LR, bgcolor="white", compound=true, newrank=true,
+  pad="0.35", nodesep="0.65", ranksep="1.15", splines=ortho,
+  fontname="Segoe UI", fontsize=24, labelloc=t, label=<<TABLE BORDER="0" CELLBORDER="0" CELLPADDING="5"><TR><TD><B>Part 2: add structured Fabric relationships</B></TD></TR><TR><TD><FONT POINT-SIZE="14">This KB adds live Fabric ontology relationships to the three Part 1 evidence sources.</FONT></TD></TR><TR><TD><FONT POINT-SIZE="14">Fabric data stays in its workspace. Queries require delegated user access, not a data copy.</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Arrows: caller to dependency. Responses return on the same connection.</FONT></TD></TR><TR><TD><TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD COLSPAN="2"><FONT POINT-SIZE="13"><B>Arrow and object legend</B></FONT></TD></TR><TR><TD ALIGN="RIGHT"><FONT COLOR="#0078D4" POINT-SIZE="18"><B>&#9473;&#9473;&#9654;</B></FONT></TD><TD ALIGN="LEFT"><FONT POINT-SIZE="12">Blue, solid: retrieve evidence / call the KB (REST or MCP)</FONT></TD></TR><TR><TD ALIGN="RIGHT"><FONT COLOR="#5242B8" POINT-SIZE="18"><B>&#9473;&#9473;&#9654;</B></FONT></TD><TD ALIGN="LEFT"><FONT POINT-SIZE="12">Purple, solid: model call for planning / answer synthesis</FONT></TD></TR><TR><TD ALIGN="RIGHT"><FONT COLOR="#687787" POINT-SIZE="18"><B>- - &#9654;</B></FONT></TD><TD ALIGN="LEFT"><FONT POINT-SIZE="12">Gray, dashed: sign-in, upload, embeddings or source data access</FONT></TD></TR><TR><TD ALIGN="RIGHT"><FONT COLOR="#D76B00" POINT-SIZE="18"><B>&#9632;</B></FONT></TD><TD ALIGN="LEFT"><FONT POINT-SIZE="12">Orange boxes: focus of this phase. Gray boxes: not connected to this KB.</FONT></TD></TR></TABLE></TD></TR><TR><TD><FONT POINT-SIZE="12">Logical lab architecture, not live status. Public endpoints, no VNet / private endpoints.</FONT></TD></TR></TABLE>>];
+node [shape=plain, fontname="Segoe UI", fontsize=15, fontcolor="#172B4D"];
+edge [fontname="Segoe UI", fontsize=11, color="#0078D4", fontcolor="#0078D4",
+  arrowsize=1.0, penwidth=3.2];
+subgraph cluster_local {
+label="PARTICIPANT DEVICE  |  not hosted in Azure"; fontsize=17; fontcolor="#5242B8";
+color="#5242B8"; fillcolor="#F8F6FC"; style="rounded,filled"; penwidth=1.2; margin=22;
+notebook [shape=box, style="rounded,filled", color="#0078D4", fillcolor="white", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD WIDTH="56" HEIGHT="56" FIXEDSIZE="TRUE"><IMG SRC="icons/browser.png" SCALE="TRUE"/></TD></TR><TR><TD><B>Jupyter notebook</B></TD></TR><TR><TD><FONT POINT-SIZE="12">Local Python client</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Parts 1-4: display the KB answer</FONT></TD></TR></TABLE>>];
+pdf [shape=box, style="rounded,filled", color="#0078D4", fillcolor="white", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD><B>Purchasing policy PDF</B></TD></TR><TR><TD><FONT POINT-SIZE="12">Local input, uploaded in Part 1</FONT></TD></TR></TABLE>>];
+}
+subgraph cluster_azure {
+label="AZURE RESOURCE GROUP  |  preconfigured services"; fontsize=17; fontcolor="#0078D4";
+color="#0078D4"; fillcolor="#F4F9FF"; style="rounded,filled"; penwidth=1.2; margin=22;
+subgraph cluster_search {
+label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD WIDTH="56" HEIGHT="56" FIXEDSIZE="TRUE"><IMG SRC="icons/search.png" SCALE="TRUE"/></TD></TR><TR><TD><B>Azure AI Search  |  Foundry IQ retrieval</B></TD></TR><TR><TD><FONT POINT-SIZE="12">Vector + full-text search, semantic ranking</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">System-assigned managed identity</FONT></TD></TR></TABLE>>; fontsize=17; fontcolor="#0078D4";
+color="#0078D4"; fillcolor="#FFFFFF"; style="rounded,filled"; penwidth=1.2; margin=22;
+kb [shape=box, style="rounded,filled", color="#D76B00", fillcolor="#FFF6E8", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD WIDTH="56" HEIGHT="56" FIXEDSIZE="TRUE"><IMG SRC="icons/foundry-iq.png" SCALE="TRUE"/></TD></TR><TR><TD><B>Knowledge base + source definitions</B></TD></TR><TR><TD><FONT POINT-SIZE="12">caldova-fabric-</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">knowledge-base</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">4 connected source definitions</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">answerSynthesis / model attached</FONT></TD></TR></TABLE>>];
+indexes [shape=box, style="rounded,filled", color="#0078D4", fillcolor="white", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD><B>Existing Search indexes</B></TD></TR><TR><TD><FONT POINT-SIZE="12">supplier-evidence</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">sourcing-documents</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Chunks, vectors and citation metadata</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Connected</FONT></TD></TR></TABLE>>];
+policy [shape=box, style="rounded,filled", color="#0078D4", fillcolor="white", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD><B>File knowledge source</B></TD></TR><TR><TD><FONT POINT-SIZE="12">Uploaded policy chunks + vectors</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">file-docs-knowledge-source</FONT></TD></TR></TABLE>>];
+}
+subgraph cluster_foundry {
+label="Microsoft Foundry  |  existing account + project"; fontsize=17; fontcolor="#5242B8";
+color="#5242B8"; fillcolor="#F7F6FD"; style="rounded,filled"; penwidth=1.2; margin=22;
+models [shape=box, style="rounded,filled", color="#0078D4", fillcolor="white", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD WIDTH="56" HEIGHT="56" FIXEDSIZE="TRUE"><IMG SRC="icons/foundry.png" SCALE="TRUE"/></TD></TR><TR><TD><B>Azure OpenAI model deployments</B></TD></TR><TR><TD><FONT POINT-SIZE="12">gpt-5.4: planning / answer synthesis</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">text-embedding-3-large: text to vectors</FONT></TD></TR></TABLE>>];
+}
+}
+subgraph cluster_fabric {
+label="FABRIC WORKSPACE  |  separate SaaS boundary"; fontsize=17; fontcolor="#157B62";
+color="#157B62"; fillcolor="#F1FAF6"; style="rounded,filled"; penwidth=1.2; margin=22;
+ontology [shape=box, style="rounded,filled", color="#D76B00", fillcolor="#FFF6E8", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD WIDTH="56" HEIGHT="56" FIXEDSIZE="TRUE"><IMG SRC="icons/fabric.png" SCALE="TRUE"/></TD></TR><TR><TD><B>Microsoft Fabric IQ</B></TD></TR><TR><TD><FONT POINT-SIZE="12">Existing ontology relationships</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Manufacturer &gt; substance &gt; product</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Live source</FONT></TD></TR></TABLE>>];
+lakehouse [shape=box, style="rounded,filled", color="#0078D4", fillcolor="white", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD WIDTH="56" HEIGHT="56" FIXEDSIZE="TRUE"><IMG SRC="icons/lakehouse.png" SCALE="TRUE"/></TD></TR><TR><TD><B>OneLake / lakehouse</B></TD></TR><TR><TD><FONT POINT-SIZE="12">Existing structured data</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Backed by lab Fabric capacity</FONT></TD></TR></TABLE>>];
+}
+subgraph cluster_m365 {
+label="MICROSOFT 365  |  separate SaaS boundary"; fontsize=17; fontcolor="#5242B8";
+color="#5242B8"; fillcolor="#F8F6FC"; style="rounded,filled"; penwidth=1.2; margin=22;
+workiq [shape=box, style="rounded,filled", color="#B9C1CA", fillcolor="#F5F6F8", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD><B>Work IQ</B></TD></TR><TR><TD><FONT POINT-SIZE="12">Existing workplace context</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">User-permission-scoped retrieval</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Discussion is not contractual approval</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Not connected to this KB</FONT></TD></TR></TABLE>>];
+}
+subgraph cluster_identity {
+label="TENANT-WIDE IDENTITY  |  not a resource inside the lab resource group"; fontsize=17; fontcolor="#687787";
+color="#687787"; fillcolor="#F7F8FA"; style="rounded,filled"; penwidth=1.2; margin=22;
+entra [shape=box, style="rounded,filled", color="#0078D4", fillcolor="white", penwidth=1.3, margin="0.13,0.10", label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD WIDTH="56" HEIGHT="56" FIXEDSIZE="TRUE"><IMG SRC="icons/entra.png" SCALE="TRUE"/></TD></TR><TR><TD><B>Microsoft Entra ID</B></TD></TR><TR><TD><FONT POINT-SIZE="12">User sign-in and delegated access</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">App scope + Work IQ federation</FONT></TD></TR><TR><TD><FONT POINT-SIZE="12">Search managed identity: service access</FONT></TD></TR></TABLE>>];
+}
+notebook -> kb [style=invis, weight=5];
+kb -> ontology [style=invis, weight=5];
+kb -> workiq [style=invis, weight=5];
+{rank=same; notebook; pdf; entra;}
+{rank=same; kb; indexes; policy; models;}
+{rank=same; ontology; lakehouse; workiq;}
+notebook -> kb [tooltip="1  Retrieve API\nQuestion / cited KB answer", color="#0078D4", fontcolor="#0078D4", style="solid", constraint=true];
+kb -> models [tooltip="Plan + synthesize", color="#5242B8", fontcolor="#5242B8", style="solid", constraint=true];
+pdf -> policy [tooltip="Part 1  Upload + ingest", color="#687787", fontcolor="#687787", style="dashed", constraint=true];
+policy -> models [tooltip="Embedding generation", color="#687787", fontcolor="#687787", style="dashed", constraint=true];
+kb -> policy [tooltip="Retrieve policy", color="#0078D4", fontcolor="#0078D4", style="solid", constraint=true];
+kb -> indexes [tooltip="Query existing indexes", color="#0078D4", fontcolor="#0078D4", style="solid", constraint=true];
+kb -> ontology [tooltip="Live ontology query\nDelegated user authorization", color="#0078D4", fontcolor="#0078D4", style="solid", constraint=true];
+ontology -> lakehouse [tooltip="Structured relationships / data", color="#687787", fontcolor="#687787", style="dashed", constraint=true];
+notebook -> entra [tooltip="User authentication", color="#687787", fontcolor="#687787", style="dashed", constraint=false];
+}

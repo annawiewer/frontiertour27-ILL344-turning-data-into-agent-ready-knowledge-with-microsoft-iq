@@ -1,0 +1,421 @@
+{
+  "schema_version": 1,
+  "capture_date": "2026-10-20",
+  "policy": "Genuine read-only Azure portal captures only. No simulated portal, notebook substitute or invented successful result. Omit screenshots where no appropriate Azure portal view is available.",
+  "captures": [
+    {
+      "id": "policy-source-files",
+      "file": "policy-source-files.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Policy source, embedding configuration and uploaded files",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge sources > file-docs-knowledge-source",
+      "observed": "File source uses text-embedding-3-large and its generated index. Four uploads of CAL-POL-PUR-001.pdf are Ready, from repeated lab runs. Four uploads are not a requirement.",
+      "original_sha256": "b247aef1e79c95a43d35ed65ff7e9ba38eebb7cfc8e1f47097e39ae7a62dcd28",
+      "published_sha256": "7707ec6eb58cb709aaa7d8e2602ad2328a1eece530ff8bfaf64cc13e50df955c",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "knowledge-bases",
+      "file": "knowledge-bases.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Knowledge base inventory and source membership",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge bases",
+      "observed": "Six KB variants are listed. Work IQ is shown as Other. The extractive KB has no chat completion model in the list.",
+      "original_sha256": "9ac9e0c780fcc06ee30439a02a98ad8d15bc665d3793378a11448534d4f4637e",
+      "published_sha256": "c2c6ef85b7c60448d9c054f2a16bb98dc2c2417959a9f53d64caa9a659490b5e",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "policy-knowledge-base",
+      "file": "policy-knowledge-base.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Policy-only knowledge base",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge bases > caldova-policy-knowledge-base",
+      "observed": "One source is connected: file-docs-knowledge-source. No query was submitted.",
+      "original_sha256": "012922cfa9ede3db732f90f5153e61d9aee12f838387495c2cfae4672eaa338c",
+      "published_sha256": "d772be73afd2b62c5ff2495648eff9cb76818dbd4b978d6ecd91ecc8644c3731",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "three-source-knowledge-base",
+      "file": "three-source-knowledge-base.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Three-source document knowledge base",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge bases > caldova-supply-chain-knowledge-base",
+      "observed": "Policy, supplier evidence and sourcing documents are connected. No query was submitted.",
+      "original_sha256": "d73d4458d5a94411ca3b55d8ab19c5bd2ec0feccbd446fcd9b652b331577c0cf",
+      "published_sha256": "8b857d7315dc083d41e6536e0679f152b3c7501d75b37b58909da40b80ac1207",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "fabric-knowledge-base",
+      "file": "fabric-knowledge-base.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Four-source Fabric knowledge base",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge bases > caldova-fabric-knowledge-base",
+      "observed": "Policy, two indexed sources and Fabric ontology are connected. The cross-boundary data-processing notice is retained. This is configuration, not proof of Fabric retrieval.",
+      "original_sha256": "b62e556184282984041d4ace2685149721690ccbc20aa6547041e1b6651fa91d",
+      "published_sha256": "a6ee18dd10b26e69b64c1987edf305268b553a7170807d3b700a7c57892da53f",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "extractive-knowledge-base-sources",
+      "file": "extractive-knowledge-base-sources.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Extractive knowledge base source membership",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge bases > caldova-supply-chain-minimal-knowledge-base > Basics",
+      "observed": "Only the policy and two indexed sources are connected.",
+      "original_sha256": "9e6a7197c431acc5ca7cdbb11c73b603ec9318ffb5107cc61b58d8e06587948b",
+      "published_sha256": "c9c818b29d8ea29c921da6db5cb20f171bf2d959d50ef980e75012464b680c24",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "knowledge-sources",
+      "file": "knowledge-sources.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Knowledge source inventory and portal support notice",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge sources",
+      "observed": "Five definitions are listed. The portal displays Work IQ as Other and explicitly says sources of type Other are not supported in the portal.",
+      "original_sha256": "32b610ddcbcae28bbc38f91aff2f9489db18f73d23fa735d06a8b9e85f6ffc0c",
+      "published_sha256": "93879a91cd7f58f0bcc4b78856a47c87ba91b0f65fa8e1cdb25aa23660863565",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "supplier-index-source",
+      "file": "supplier-index-source.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Supplier evidence indexed knowledge source",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge sources > supplier-evidence-knowledge-source",
+      "observed": "The source points to the existing supplier-evidence index.",
+      "original_sha256": "69888c6d7d73f30d770ce856bfc308e0a3450ccae881707644ec9a62078eced1",
+      "published_sha256": "4f619c4a056a3143cea56cbcf6dc4c706865a4c22889250e2094c86875325856",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "sourcing-index-source",
+      "file": "sourcing-index-source.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Sourcing documents indexed knowledge source",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge sources > sourcing-documents-knowledge-source",
+      "observed": "The source points to the existing sourcing-documents index.",
+      "original_sha256": "18da6533c93fc6280b8c122cdd56d6c0862f741ec50220fd7467daadc74324ed",
+      "published_sha256": "3bf25ff4d0bd1144cff75ad057e4cab703e6896bbc3adae684eea3c6ebcfaed5",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "fabric-ontology-source",
+      "file": "fabric-ontology-source.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Fabric ontology source configuration in Azure",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge sources > fabric-ontology-knowledge-source",
+      "observed": "Source type is Ontology. The Fabric workspace and ontology ID fields are populated and redacted. This is the Search connection, not the Fabric ontology graph.",
+      "original_sha256": "e2c7a2f3d0f98f791dd8d63b1582b13aeaa18b27d835fbc186c41fd1254206d7",
+      "published_sha256": "13762d3824dfd6d954da0e098e1838f0d23c9af403b1dc5dfc2323306770c841",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "search-indexes",
+      "file": "search-indexes.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Existing search indexes and document counts",
+      "navigation": "Azure portal > your lab Search service > Search management > Indexes",
+      "observed": "sourcing-documents has 16 entries, supplier-evidence has 31, and the generated file index has 44. These are observed counts, not required constants.",
+      "original_sha256": "c665aa0323af1628cd29481388af13d3a08da01db501ec9075f0f75c12344807",
+      "published_sha256": "cd6ade7d19130d76057f0d3d8cb85fc865a5102375f1334696eb7758e98691d3",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    },
+    {
+      "id": "extractive-knowledge-base-settings",
+      "file": "extractive-knowledge-base-settings.png",
+      "kind": "azure-portal",
+      "captured_on": "2026-10-20",
+      "title": "Minimal reasoning and extractive output settings",
+      "navigation": "Azure portal > your lab Search service > Agentic retrieval > Knowledge bases > caldova-supply-chain-minimal-knowledge-base > Retrieval and Output configurations",
+      "observed": "Reasoning effort is Minimal, output mode is Extractive data, and Chat completion model offers Add model deployment because no KB model is attached.",
+      "original_sha256": "b5ae8676917781706068e69aef96a1034b0a4c9162fe487cf37bf0e6cbce6df2",
+      "published_sha256": "1e403b11f18022fc090c6838c7d95169a41ffd4f06df41f0c545377c1f9337b4",
+      "editing": "Account banner and browser chrome cropped. Environment-specific names, hostnames and GUIDs masked in gray where present. Blank margins cropped. Orange outlines and a separate reference footer added. No resource state, source membership or configuration values replaced."
+    }
+  ],
+  "coverage": [
+    {
+      "notebook": "part1-standard-foundry-iq-kb.ipynb",
+      "part": 1,
+      "step": 1,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part1-standard-foundry-iq-kb.ipynb",
+      "part": 1,
+      "step": 2,
+      "captures": [
+        "policy-source-files"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part1-standard-foundry-iq-kb.ipynb",
+      "part": 1,
+      "step": 3,
+      "captures": [
+        "policy-source-files"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part1-standard-foundry-iq-kb.ipynb",
+      "part": 1,
+      "step": 4,
+      "captures": [
+        "policy-knowledge-base"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part1-standard-foundry-iq-kb.ipynb",
+      "part": 1,
+      "step": 5,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part1-standard-foundry-iq-kb.ipynb",
+      "part": 1,
+      "step": 6,
+      "captures": [
+        "search-indexes"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part1-standard-foundry-iq-kb.ipynb",
+      "part": 1,
+      "step": 7,
+      "captures": [
+        "supplier-index-source",
+        "sourcing-index-source"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part1-standard-foundry-iq-kb.ipynb",
+      "part": 1,
+      "step": 8,
+      "captures": [
+        "three-source-knowledge-base"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part1-standard-foundry-iq-kb.ipynb",
+      "part": 1,
+      "step": 9,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part2-fabric-iq-to-kb.ipynb",
+      "part": 2,
+      "step": 1,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part2-fabric-iq-to-kb.ipynb",
+      "part": 2,
+      "step": 2,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part2-fabric-iq-to-kb.ipynb",
+      "part": 2,
+      "step": 3,
+      "captures": [
+        "fabric-ontology-source"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part2-fabric-iq-to-kb.ipynb",
+      "part": 2,
+      "step": 4,
+      "captures": [
+        "fabric-knowledge-base"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part2-fabric-iq-to-kb.ipynb",
+      "part": 2,
+      "step": 5,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part3-work-iq-to-kb.ipynb",
+      "part": 3,
+      "step": 1,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part3-work-iq-to-kb.ipynb",
+      "part": 3,
+      "step": 2,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part3-work-iq-to-kb.ipynb",
+      "part": 3,
+      "step": 3,
+      "captures": [
+        "knowledge-sources"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part3-work-iq-to-kb.ipynb",
+      "part": 3,
+      "step": 4,
+      "captures": [
+        "knowledge-bases"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part3-work-iq-to-kb.ipynb",
+      "part": 3,
+      "step": 5,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part4-work-iq-fabric-iq-to-kb.ipynb",
+      "part": 4,
+      "step": 1,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part4-work-iq-fabric-iq-to-kb.ipynb",
+      "part": 4,
+      "step": 2,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part4-work-iq-fabric-iq-to-kb.ipynb",
+      "part": 4,
+      "step": 3,
+      "captures": [
+        "knowledge-sources"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part4-work-iq-fabric-iq-to-kb.ipynb",
+      "part": 4,
+      "step": 4,
+      "captures": [
+        "knowledge-bases"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part4-work-iq-fabric-iq-to-kb.ipynb",
+      "part": 4,
+      "step": 5,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part5-agent-framework-mcp.ipynb",
+      "part": 5,
+      "step": 1,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part5-agent-framework-mcp.ipynb",
+      "part": 5,
+      "step": 2,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part5-agent-framework-mcp.ipynb",
+      "part": 5,
+      "step": 3,
+      "captures": [
+        "extractive-knowledge-base-sources",
+        "extractive-knowledge-base-settings"
+      ],
+      "status": "captured"
+    },
+    {
+      "notebook": "part5-agent-framework-mcp.ipynb",
+      "part": 5,
+      "step": 4,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part5-agent-framework-mcp.ipynb",
+      "part": 5,
+      "step": 5,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part5-agent-framework-mcp.ipynb",
+      "part": 5,
+      "step": 6,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    },
+    {
+      "notebook": "part5-agent-framework-mcp.ipynb",
+      "part": 5,
+      "step": 7,
+      "captures": [],
+      "status": "omitted",
+      "reason": "No matching Azure portal screenshot included. Local, authentication and API-only steps do not receive substitute images."
+    }
+  ],
+  "outstanding": [
+    "Foundry model deployment view was not captured because opening Foundry required a separate sign-in.",
+    "Fabric workspace and ontology graph, and Entra application prerequisites, were not captured. The included Fabric image is the Search connection view in Azure portal.",
+    "Query results, local environment, delegated tokens, MCP client objects and local agent activity are not illustrated with substitute screenshots."
+  ]
+}

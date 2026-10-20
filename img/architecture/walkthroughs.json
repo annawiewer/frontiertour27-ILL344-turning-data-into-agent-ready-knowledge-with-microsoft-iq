@@ -1,0 +1,66 @@
+{
+  "overview": [
+    "Start with the participant device. The notebook or Python agent runs locally, not in Azure.",
+    "Follow the dashed gray identity arrow to Entra ID. Sign-in supplies the user authorization needed by the client and permission-scoped sources.",
+    "In Part 1, follow the dashed gray upload and embedding connections. The policy becomes searchable in a file knowledge source. The two document indexes already exist.",
+    "Follow the solid blue arrow from the client to the selected Search KB, then from the KB to its connected evidence sources. Fabric and Work IQ stay remote and are queried live.",
+    "For Parts 1-4, follow the solid purple arrow from the KB to Azure OpenAI. The KB uses its attached model for planning and answer synthesis.",
+    "For Part 5, follow the separate purple arrow from the local agent to Azure OpenAI. The agent calls an extractive KB over MCP, then writes the final answer itself.",
+    "Return to the notebook output. Check citations, source activity and references. Responses travel back over the same connections, so no reverse arrows are drawn."
+  ],
+  "start": [
+    "Locate the participant device and load the notebook environment variables. This configures a local client, not a new Azure deployment.",
+    "Follow the dashed gray arrow to Entra ID and sign in. Keep tokens and environment-specific identifiers out of shared files.",
+    "Inspect the preconfigured Azure AI Search service, its two indexes, and the Foundry model deployments.",
+    "Locate the separate Fabric workspace and Microsoft 365 boundary. Their data and identity prerequisites are prepared outside the notebook.",
+    "Notice the gray KB and source cards. No attendee KB exists at this point, so no blue retrieval or purple KB model-call arrows are shown."
+  ],
+  "policy": [
+    "Configure the local notebook and sign in through Entra ID. The dashed gray identity arrow represents authentication.",
+    "Create the file knowledge source and upload the purchasing policy. Follow the dashed gray connections from the PDF to the file source and from the source to the embedding model.",
+    "Wait for ingestion and inspect the uploaded file status. A successful upload alone does not prove that the policy is searchable.",
+    "Create the policy KB with the file source and the existing synthesis model. Follow the solid blue notebook-to-KB arrow when you submit a question.",
+    "Follow the blue KB-to-file-source arrow for evidence and the purple KB-to-model arrow for planning and answer synthesis.",
+    "Read the cited policy answer in the notebook and verify its file reference and source activity. The response returns on the same connections."
+  ],
+  "documents": [
+    "Reuse the ingested policy and the preloaded supplier-evidence and sourcing-documents indexes. Do not upload those indexed documents again.",
+    "Create the two search-index knowledge source definitions, then create a separate KB connecting all three sources.",
+    "Submit a question from the local notebook. Follow the solid blue connection to this three-source KB.",
+    "Follow the blue connections from the KB to the policy source and the existing indexes. The indexes box represents two distinct document sources.",
+    "Follow the purple connection to Azure OpenAI for planning and a grounded, cited answer. The dashed gray embedding connection belongs to policy ingestion, not every query.",
+    "Check activity and references to see which sources actually supplied evidence. Configuration alone does not prove that all three were used."
+  ],
+  "fabric": [
+    "Sign in and acquire the delegated user token. The dashed gray Entra connection supplies authorization for live Fabric access.",
+    "Create source definitions for the Part 1 evidence and the existing Fabric ontology, then create a four-source KB. This branches from Part 1 rather than modifying its KB.",
+    "Send a question from the notebook to the KB over the solid blue connection.",
+    "Follow the blue connections to the policy, the two document indexes, and Fabric IQ. The dashed gray ontology-to-OneLake connection represents access to existing structured data, not a copy into Search.",
+    "Follow the purple KB-to-model connection for planning and answer synthesis.",
+    "Inspect the returned Fabric activity and references alongside document evidence. An existing ontology does not prove this query used it."
+  ],
+  "workiq": [
+    "Sign in and acquire the delegated user token. Entra prerequisites and the user assertion enable permission-scoped Work IQ retrieval.",
+    "Create the indexed and Work IQ source definitions, then create a four-source KB with the policy. This branch does not include Fabric.",
+    "Send the question from the local notebook to the KB over the solid blue connection.",
+    "Follow the blue connections to policy, document indexes and Work IQ. Workplace context remains in Microsoft 365 and is retrieved with the user's permissions.",
+    "Follow the purple KB-to-model connection for planning and answer synthesis. Workplace discussion is context, not contractual approval.",
+    "Inspect Work IQ activity and returned references. Use the notebook SDK/API read-back for Work IQ configuration, not an assumed portal editor."
+  ],
+  "combined": [
+    "Configure the notebook and acquire delegated authorization through Entra ID before querying live Fabric and Work IQ sources.",
+    "Create source definitions and a separate combined KB with five sources: policy, supplier evidence, sourcing documents, Fabric ontology and Work IQ.",
+    "Follow the solid blue notebook-to-KB arrow to submit the cross-source question.",
+    "Follow the outgoing blue arrows to the evidence sources. The indexes box counts as two sources. Fabric accesses existing OneLake relationships and Work IQ queries existing workplace context.",
+    "Follow the purple KB-to-Azure OpenAI arrow for planning and answer synthesis. Remote source data is not bulk-copied into Search.",
+    "Read the cited briefing in the notebook. Compare activity and references with each claim rather than assuming every connected source contributed."
+  ],
+  "agent": [
+    "Configure the local agent environment and authentication for the KB's MCP endpoint. No hosted Foundry agent is deployed.",
+    "Create a separate three-source KB using policy and the two document indexes. Set extractiveData, minimal reasoning and no KB-attached model.",
+    "Create the MCP tool client and the local Python agent with its Azure OpenAI model client.",
+    "Run a question and follow the solid blue agent-to-KB arrow. The agent invokes knowledge_base_retrieve over MCP and the KB retrieves evidence from its three sources.",
+    "Follow the purple arrow directly from the local agent to Azure OpenAI. The agent, not the KB, synthesizes the final answer from the returned extracts.",
+    "Inspect the answer and tool-call trace in the notebook. Fabric and Work IQ are gray and disconnected from this KB. The dashed gray policy embedding path belongs to earlier ingestion."
+  ]
+}

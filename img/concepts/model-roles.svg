@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="800" viewBox="0 0 1440 800" role="img" aria-labelledby="title desc">
+<title id="title">Two models with different jobs</title>
+<desc id="desc">The embedding model represents meaning. The chat model reads and writes language.</desc>
+<rect width="1440" height="800" fill="white"/>
+<text x="40" y="54" fill="#000000" font-size="30" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="40" dy="0">Two models with different jobs</tspan></text>
+<text x="40" y="101" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">The embedding model represents meaning. The chat model reads and writes language.</tspan></text>
+<text x="40" y="767" fill="#000000" font-size="17" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="40" dy="0">CONCEPT ILLUSTRATION | Not a portal view, deployed state or saved query result.</tspan></text>
+<rect x="40" y="165" width="630" height="220" rx="12" fill="#EAF4FC" stroke="#0078D4" stroke-width="2"/>
+<text x="60" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="60" dy="0">Chat model</tspan></text>
+<text x="60" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="60" dy="0">gpt-5.4 in this lab</tspan><tspan x="60" dy="27.55">Input: question and context</tspan><tspan x="60" dy="27.55">Output: a plan or a written answer</tspan></text>
+<rect x="730" y="165" width="670" height="220" rx="12" fill="#F1ECF8" stroke="#7052A3" stroke-width="2"/>
+<text x="750" y="203" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="600"><tspan x="750" dy="0">Embedding model</tspan></text>
+<text x="750" y="258" fill="#000000" font-size="19" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="750" dy="0">text-embedding-3-large in this lab</tspan><tspan x="750" dy="27.55">Input: text</tspan><tspan x="750" dy="27.55">Output: a numeric vector, not an answer</tspan></text>
+<ellipse cx="1055.0" cy="515.0" rx="305.0" ry="100.0" fill="#F1ECF8" stroke="#7052A3" stroke-width="2"/>
+<text x="850" y="468" fill="#000000" font-size="20" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="850" dy="0">Nearby meaning</tspan><tspan x="850" dy="29.0">&quot;temperature excursion&quot;</tspan><tspan x="850" dy="29.0">&quot;cold-chain temperature alarm&quot;</tspan></text>
+<text x="65" y="462" fill="#000000" font-size="22" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="65" dy="0">Parts 1-4: the KB calls its chat model.</tspan><tspan x="65" dy="31.9">Part 5: the local agent calls its chat</tspan><tspan x="65" dy="31.9">model.</tspan><tspan x="65" dy="31.9">An embedding is used for finding evidence.</tspan></text>
+<text x="65" y="675" fill="#000000" font-size="20" font-family="Segoe UI,Arial,sans-serif" font-weight="400"><tspan x="65" dy="0">A deployment name identifies a callable model deployment. It is not the same as the model&#x27;s job.</tspan></text>
+</svg>
