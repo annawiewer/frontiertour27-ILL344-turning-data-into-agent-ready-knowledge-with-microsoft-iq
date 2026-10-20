@@ -258,6 +258,27 @@ class PortalCaptureTests(unittest.TestCase):
         self.assertIn("**Open:**", "".join(navigation["source"]))
         self.assertIn("Step 3", "".join(navigation["source"]))
 
+    def test_portal_screenshots_are_not_repeated_within_a_notebook(self):
+        for path in sorted(NOTEBOOKS.glob("part*.ipynb")):
+            notebook = json.loads(path.read_text(encoding="utf-8"))
+            seen = {}
+            for cell in notebook["cells"]:
+                if cell["cell_type"] != "markdown":
+                    continue
+                for filename in re.findall(
+                    r"!\[[^\]]*\]\(\.\./\.\./img/portal/([^)]+\.png)\)",
+                    "".join(cell["source"]),
+                ):
+                    digest = hashlib.sha256(
+                        (self.directory / filename).read_bytes()
+                    ).hexdigest()
+                    with self.subTest(notebook=path.name, image=filename):
+                        self.assertNotIn(
+                            digest, seen,
+                            f"{filename} repeats the screenshot from cell {seen.get(digest)}",
+                        )
+                    seen[digest] = cell.get("id")
+
     def test_manifest_does_not_publish_environment_identifiers(self):
         text = json.dumps(self.manifest)
         self.assertNotRegex(text, r"(?i)\.onmicrosoft\.com|/subscriptions/|C:\\\\Users\\\\")
@@ -309,6 +330,61 @@ class AzureArchitectureTests(unittest.TestCase):
                 png = (self.generator.OUT / f"{name}.png").read_bytes()
                 self.assertEqual(png[:8], b"\x89PNG\r\n\x1a\n")
                 self.assertEqual(int.from_bytes(png[16:20], "big"), 1800)
+
+    def test_parts_2_to_5_have_distinct_planned_and_completed_architectures(self):
+        ns = "{http://www.w3.org/2000/svg}"
+        for part, config in self.generator.PART_REVEALS.items():
+            path, = NOTEBOOKS.glob(f"part{part}-*.ipynb")
+            notebook = json.loads(path.read_text(encoding="utf-8"))
+            markdown = "\n".join(
+                "".join(cell["source"]) for cell in notebook["cells"]
+                if cell["cell_type"] == "markdown"
+            )
+            images = []
+            for complete, suffix in ((False, "before"), (True, "after")):
+                name = f"part{part}-{suffix}"
+                with self.subTest(part=part, complete=complete):
+                    svg = self.generator.build_part_reveal(part, complete)
+                    self.assertEqual(
+                        svg, (self.generator.OUT / f"{name}.svg").read_text(encoding="utf-8")
+                    )
+                    root = ET.fromstring(svg)
+                    text = " ".join(root.itertext())
+                    self.assertIn("Faded: reused", text)
+                    self.assertNotIn("Gray boxes: not connected", text)
+                    self.assertIn("connected source definitions" if complete
+                                  else "planned source definitions", text)
+                    groups = {
+                        group.find(ns + "title").text: group
+                        for group in root.iter(ns + "g")
+                        if group.find(ns + "title") is not None
+                    }
+                    self.assertEqual(
+                        {g.attrib["data-part-cover"]
+                         for g in root.findall(f".//{ns}g[@data-part-cover]")},
+                        set(config["covers"]),
+                    )
+                    for node in config["focus"]:
+                        self.assertEqual(groups[node].attrib["data-build-state"],
+                                         "completed" if complete else "planned")
+                        shape = groups[node].find(ns + "path")
+                        self.assertEqual(shape.attrib["stroke"], self.generator.ORANGE)
+                        self.assertEqual("stroke-dasharray" in shape.attrib, not complete)
+                    for edge in config["new_edges"]:
+                        self.assertEqual(groups[edge].attrib["opacity"], "1" if complete else "0.12")
+                    for node in ("policy", "indexes", "models"):
+                        self.assertEqual(groups[node].attrib["opacity"], "0.4")
+                        self.assertEqual(groups[node].find(ns + "path").attrib["stroke"], "#B9C1CA")
+                    if part == 5:
+                        self.assertNotIn("kb->models", groups)
+                        self.assertIn("agent->models", groups)
+                    self.assertIn(f"../../img/architecture/{name}.png", markdown)
+                    self.assertNotIn(f"../../img/architecture/azure-{config['stage']}.png", markdown)
+                    png = (self.generator.OUT / f"{name}.png").read_bytes()
+                    self.assertEqual(png[:8], b"\x89PNG\r\n\x1a\n")
+                    self.assertEqual(int.from_bytes(png[16:20], "big"), 1800)
+                    images.append(png)
+            self.assertNotEqual(*images)
 
     def test_shared_descriptions_match_diagrams_and_notebook_captions(self):
         descriptions = json.loads(

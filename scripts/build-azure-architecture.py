@@ -487,6 +487,166 @@ def render_part1_reveals():
         print(f"Rendered {name}: staged Part 1 SVG and PNG")
 
 
+PART_REVEALS = {
+    2: {
+        "stage": "fabric", "focus": ("kb", "ontology"),
+        "new_edges": ("notebook->kb", "kb->ontology", "kb->policy", "kb->indexes", "kb->models"),
+        "covers": {"cluster_m365": "Separate branch: Work IQ (Parts 3 / 4)"},
+        "before": (
+            "Part 2 begins: connect Fabric relationships",
+            "Reuse the three Part 1 sources. Create a separate four-source KB with a Fabric ontology connection.",
+            "Orange dashed cards are the build target. Faded documents and services already exist. Work IQ stays covered.",
+        ),
+        "after": (
+            "Part 2 complete: documents plus Fabric relationships",
+            "Built: a Fabric source connection and a separate four-source KB. The Part 1 KB remains unchanged.",
+            "Orange highlights the completed configuration. Fabric data stays remote. Verify actual query evidence.",
+        ),
+    },
+    3: {
+        "stage": "workiq", "focus": ("kb", "workiq"),
+        "new_edges": ("notebook->kb", "kb->workiq", "kb->policy", "kb->indexes", "kb->models"),
+        "covers": {"cluster_fabric": "Separate branch: Fabric IQ (Parts 2 / 4)"},
+        "before": (
+            "Part 3 begins: connect workplace context",
+            "Return to the three Part 1 sources. Create a separate four-source KB with Work IQ, without Fabric.",
+            "Orange dashed cards are the build target. Faded documents and services already exist. Fabric stays covered.",
+        ),
+        "after": (
+            "Part 3 complete: documents plus Work IQ context",
+            "Built: a Work IQ connection and a separate four-source KB. This is a sibling of the Fabric KB.",
+            "Orange highlights the completed configuration. User permissions still govern workplace retrieval.",
+        ),
+    },
+    4: {
+        "stage": "combined", "focus": ("kb",),
+        "new_edges": ("notebook->kb", "kb->ontology", "kb->workiq", "kb->policy", "kb->indexes", "kb->models"),
+        "covers": {},
+        "before": (
+            "Part 4 begins: combine the five source roles",
+            "Reuse the document, Fabric and Work IQ source definitions. Create a separate combined KB.",
+            "The orange dashed KB is the build target. Faded sources already exist. Faint arrows show planned wiring.",
+        ),
+        "after": (
+            "Part 4 complete: one five-source configuration",
+            "Built: a separate KB connecting policy, two document indexes, Fabric and Work IQ.",
+            "Orange highlights the new combined KB. Visible connections are configuration, not proof all sources answered.",
+        ),
+    },
+    5: {
+        "stage": "agent", "focus": ("kb", "agent"),
+        "new_edges": ("agent->kb", "agent->models", "kb->policy", "kb->indexes"),
+        "covers": {
+            "cluster_fabric": "Not used by this KB: Fabric IQ",
+            "cluster_m365": "Not used by this KB: Work IQ",
+        },
+        "before": (
+            "Part 5 begins: build an extractive KB and local agent",
+            "Reuse only the three Part 1 sources. Build a new model-free KB and a local MCP agent.",
+            "Orange dashed cards are the build target. Faded services already exist. Fabric and Work IQ stay covered.",
+        ),
+        "after": (
+            "Part 5 complete: local agent over an extractive KB",
+            "Built: a three-source extractive KB and a local MCP agent. The agent calls the model, not the KB.",
+            "Orange highlights the completed build. No hosted agent, Fabric connection or Work IQ connection is created.",
+        ),
+    },
+}
+
+
+def build_part_reveal(part, complete=False):
+    """Stage each independent KB branch without implying a live deployment check."""
+    config = PART_REVEALS[part]
+    stage = config["stage"]
+    title, *descriptions = config["after" if complete else "before"]
+    ns = "{http://www.w3.org/2000/svg}"
+    ET.register_namespace("", ns[1:-1])
+    ET.register_namespace("xlink", "http://www.w3.org/1999/xlink")
+    root = ET.fromstring((OUT / f"azure-{stage}.svg").read_text(encoding="utf-8"))
+    graph = root.find(ns + "g")
+    groups = {
+        group.find(ns + "title").text: group
+        for group in graph.findall(ns + "g")
+        if group.find(ns + "title") is not None
+    }
+    replacements = dict(zip(DESCRIPTIONS[stage], descriptions))
+    replacements[STAGES[stage][0]] = title
+    replacements["Orange boxes: focus of this phase. Gray boxes: not connected to this KB."] = (
+        "Orange: new build. Faded: reused. Covered: not used by this KB."
+    )
+    for text in graph.findall(ns + "text"):
+        if text.text in replacements:
+            is_legend = text.text.startswith("Orange boxes:")
+            text.text = replacements[text.text]
+            if not is_legend:
+                text.set("text-anchor", "middle")
+                text.set("x", str(float(root.attrib["viewBox"].split()[2]) / 2 - 25.2))
+
+    for text in graph.iter(ns + "text"):
+        if text.text == "Connected":
+            text.text = "Reused from Part 1"
+        elif not complete and text.text and " connected source definitions" in text.text:
+            text.text = text.text.replace(" connected", " planned")
+        elif not complete and text.text == "Live source":
+            text.text = "Planned live connection" if part in (2, 3) else "Existing source definition"
+
+    for name, group in groups.items():
+        kind = group.attrib.get("class")
+        if kind == "cluster":
+            group.set("opacity", "0.45")
+        elif kind == "node":
+            group.set("opacity", "0.4")
+            shape = group.find(ns + "path")
+            shape.set("fill", "#F5F6F8")
+            shape.set("stroke", "#B9C1CA")
+        elif kind == "edge":
+            group.set("opacity", "0.15")
+    for name in config["focus"]:
+        group = groups[name]
+        group.set("opacity", "1" if complete else "0.65")
+        group.set("data-build-state", "completed" if complete else "planned")
+        shape = group.find(ns + "path")
+        shape.set("fill", "#FFF0D8")
+        shape.set("stroke", ORANGE)
+        shape.set("stroke-width", "3")
+        if not complete:
+            shape.set("stroke-dasharray", "8,5")
+    for name in config["new_edges"]:
+        groups[name].set("opacity", "1" if complete else "0.12")
+    for name in ("entra", "notebook->entra"):
+        groups[name].set("opacity", "0.55")
+
+    for cluster, caption in config["covers"].items():
+        shape = groups[cluster].find(ns + "path")
+        coordinates = [float(n) for n in re.findall(r"-?\d+(?:\.\d+)?", shape.attrib["d"])]
+        left, right = min(coordinates[::2]), max(coordinates[::2])
+        top, bottom = min(coordinates[1::2]), max(coordinates[1::2])
+        cover = ET.SubElement(graph, ns + "g", {"data-part-cover": cluster})
+        ET.SubElement(cover, ns + "rect", {
+            "x": str(left), "y": str(top), "width": str(right - left),
+            "height": str(bottom - top), "rx": "12",
+            "fill": "#F4F5F7", "stroke": "#D8DDE3",
+        })
+        text = ET.SubElement(cover, ns + "text", {
+            "x": str((left + right) / 2), "y": str((top + bottom) / 2),
+            "text-anchor": "middle", "font-family": "Segoe UI",
+            "font-size": "15", "fill": "#687787",
+        })
+        text.text = caption
+    root.set("aria-label", title + ". " + " ".join(descriptions) + " Not a live deployment status.")
+    return ET.tostring(root, encoding="unicode")
+
+
+def render_part_reveals():
+    for part in PART_REVEALS:
+        for complete, suffix in ((False, "before"), (True, "after")):
+            name = f"part{part}-{suffix}"
+            svg = build_part_reveal(part, complete)
+            (OUT / f"{name}.svg").write_text(svg, encoding="utf-8")
+            (OUT / f"{name}.png").write_bytes(resvg_py.svg_to_bytes(svg_string=svg, width=1800, dpi=96))
+            print(f"Rendered {name}: staged SVG and PNG")
+
+
 def main():
     check_icons()
     dot = shutil.which("dot")
@@ -522,6 +682,7 @@ def main():
         (OUT / f"{name}.png").write_bytes(resvg_py.svg_to_bytes(svg_string=svg, width=1800, dpi=96))
         print(f"Rendered {name}: SVG, PNG, editable Graphviz source")
     render_part1_reveals()
+    render_part_reveals()
     (OUT / "descriptions.json").write_text(
         json.dumps({stage: " ".join(lines) for stage, lines in DESCRIPTIONS.items()}, indent=2) + "\n",
         encoding="utf-8",
