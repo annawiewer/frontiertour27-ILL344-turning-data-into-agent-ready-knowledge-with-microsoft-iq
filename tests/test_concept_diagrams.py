@@ -51,51 +51,37 @@ class ConceptDiagramTests(unittest.TestCase):
                     self.assertLessEqual(visible_bottom, diagram.height)
                     self.assertGreaterEqual(element["height"], element["fontSize"] * 2.5 * lines)
 
-    def test_notebook_concepts_are_unique_and_precede_their_exercise(self):
-        expected = {
-            1: [("step2", "model-roles"), ("step3", "document-ingestion"),
-                ("step4", "source-versus-kb"), ("step6", "index-anatomy"),
-                ("references", "citation-trail")],
-            2: [("step2", "authorization-lanes"), ("step3", "ontology-relationships")],
-            3: [("step5", "workplace-versus-commitment")],
-            4: [("step5", "evidence-roles")],
-            5: [("step3", "answer-boundary")],
-        }
-        for part, guides in expected.items():
-            path, = (ROOT / "src" / "notebooks").glob(f"part{part}-*.ipynb")
+    def test_notebooks_keep_only_boundary_architectures_and_portal_images(self):
+        for path in (ROOT / "src" / "notebooks").glob("part*.ipynb"):
             notebook = json.loads(path.read_text(encoding="utf-8"))
             cells = notebook["cells"]
-            concept_cells = [c for c in cells if TAG in c.get("metadata", {}).get("tags", [])]
-            self.assertEqual(len(concept_cells), len(guides))
-            self.assertEqual(len({c.get("id") for c in concept_cells}), len(guides))
-            for anchor, image in guides:
-                cell, = [c for c in concept_cells if c["id"] == f"concept-p{part}-{anchor}"]
-                self.assertEqual(cell["cell_type"], "markdown")
+            architecture_cells = []
+            for index, cell in enumerate(cells):
+                if cell["cell_type"] != "markdown":
+                    continue
+                self.assertFalse(set(cell.get("metadata", {}).get("tags", [])) & {
+                    TAG, "lab-section-map", "lab-section-compare", "lab-guide-intro",
+                })
                 text = "".join(cell["source"])
-                self.assertNotIn(";", text)
-                self.assertNotIn("\u2014", text)
-                self.assertIn("Concept illustration", text)
-                target = f"../../img/concepts/{image}.png"
-                self.assertIn(target, text)
-                self.assertTrue((path.parent / target).is_file())
-                following = "".join(cells[cells.index(cell) + 1]["source"])
-                if anchor == "references":
-                    self.assertTrue(following.startswith("### Review the references"))
-                else:
-                    step = anchor.removeprefix("step")
-                    self.assertRegex(following, rf"(?m)^## Step {step}:")
+                images = re.findall(r"!\[[^\]]*\]\(([^)]+)\)", text)
+                for target in images:
+                    self.assertTrue((path.parent / target).is_file())
+                    self.assertTrue(target.startswith(("../../img/architecture/", "../../img/portal/")))
+                if any("/architecture/" in target for target in images):
+                    architecture_cells.append(index)
+            self.assertEqual(len(architecture_cells), 2, path.name)
+            self.assertLessEqual(architecture_cells[0], 1)
+            self.assertGreaterEqual(architecture_cells[1], len(cells) - 3)
             code = "\n".join(
                 "".join(c["source"]) for c in cells if c["cell_type"] == "code"
             )
             compile(code, str(path), "exec", flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT)
 
-    def test_every_concept_is_linked_and_no_guide_is_a_portal_capture(self):
-        documents = [(ROOT / "src" / "notebooks" / "README.md").read_text(encoding="utf-8")]
-        for path in (ROOT / "src" / "notebooks").glob("part*.ipynb"):
-            for cell in json.loads(path.read_text(encoding="utf-8"))["cells"]:
-                if TAG in cell.get("metadata", {}).get("tags", []):
-                    self.assertNotIn("lab-portal-capture", cell["metadata"]["tags"])
-                    documents.append("".join(cell["source"]))
+    def test_every_concept_remains_available_in_companion_material(self):
+        documents = [
+            (ROOT / relative).read_text(encoding="utf-8")
+            for relative in ("src/notebooks/README.md", "docs/visual-guide.md")
+        ]
         links = set(re.findall(r"img/concepts/([\w-]+)\.png", "\n".join(documents)))
         self.assertEqual(links, set(generator.build_all()))
 

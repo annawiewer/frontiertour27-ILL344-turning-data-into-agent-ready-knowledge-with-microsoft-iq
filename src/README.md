@@ -12,7 +12,7 @@ Start with the [visual learning path](notebooks/README.md) to understand the ser
 | [Part 4](notebooks/part4-work-iq-fabric-iq-to-kb.ipynb) | Combine all five sources in another KB | Actual source activity and cross-source grounding |
 | [Part 5](notebooks/part5-agent-framework-mcp.ipynb) | Create an extractive KB over the Part 1 sources and call it from a local agent | MCP tool calls and agent-synthesized citations |
 
-Each notebook includes an architecture map, read-only configuration checkpoints, portal navigation, and a Source Hunt. The maps describe intended wiring. The checkpoint cells verify actual configuration. Retrieval activity and references verify what happened for one query.
+Each notebook keeps an architecture at the beginning and end, matching genuine portal screenshots, and a Source Hunt. Repeated section maps and concept illustrations are available in the companion guides instead of interrupting the exercises. The architecture describes intended wiring. Configuration read-back and query evidence establish actual state.
 
 `notebooks/lab_visuals.py` renders the shared checkpoint tables and evidence cards. Raw activity and reference JSON remains available in expandable details. It does not create resources or query protected source content.
 

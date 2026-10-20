@@ -15,7 +15,7 @@ These sources are not interchangeable. A policy states a rule. A document is evi
 
 [![Five evidence roles: policy, supplier evidence, approved commitments, explicit relationships, and workplace context contribute different kinds of support to a briefing.](../../img/concepts/evidence-roles.png)](../../img/concepts/evidence-roles.png)
 
-These **concept illustrations** explain how to think about the lab. They are not portal screenshots or proof of a successful query. Click any illustration to enlarge it. The notebooks introduce the more detailed concepts immediately before the relevant exercise.
+These **concept illustrations** explain how to think about the lab. They are not portal screenshots or proof of a successful query. Click any illustration to enlarge it. Detailed concepts stay in this README and the [visual field guide](../../docs/visual-guide.md#concept-illustrations), not in the notebook exercise flow.
 
 ## First, read the architecture as a story
 
@@ -110,11 +110,11 @@ Each branch creates a **different knowledge base**. Parts 2 and 3 do not success
 
 ## How to work through each exercise
 
-Each notebook shows its architecture near the beginning and repeats it near the end as a recap. Part 1 has dedicated before/after images: the opening highlights the policy-only build, fades the document indexes, and covers Fabric IQ and Work IQ. The closing highlights the completed policy and index source configuration together. Existing services are subdued, and later parts stay covered. These diagrams are visible images and can be clicked to open the full-size PNG. Section maps later in the notebook are additional, optional close-ups of a particular step.
+Each notebook contains just two architecture images: one near the beginning and one near the end as a recap. Part 1 has dedicated before/after images: the opening highlights the policy-only build, fades the document indexes, and covers Fabric IQ and Work IQ. The closing highlights the completed policy and index source configuration together. Existing services are subdued, and later parts stay covered. Click an image to open its full-size PNG. Between these boundaries, only matching genuine portal screenshots interrupt the exercises. Concept illustrations, section maps, and repeated comparison blocks are kept out of the notebook flow.
 
 1. **Before you run code:** read the architecture at the beginning of the notebook. Orange highlights the services or connections introduced in that part.
 2. **Build or connect:** run the code and note what the notebook creates versus what the lab already provides.
-3. **Inspect:** use the **Compare with the product** guidance to find the corresponding configuration or evidence.
+3. **Inspect:** use matching portal screenshots and their navigation captions, then check actual configuration or query evidence.
 4. **Review and verify:** return to the architecture recap at the end, then compare its intended wiring with the service read-back and actual query activity, references, and citations. A diagram is not proof that a resource exists or a query succeeded.
 
 The notebooks now include **12 original Azure portal screenshots at 13 matching checkpoints**, with the navigation path, fields to inspect, and an explanation of what the view does and does not prove. Click an image to enlarge it. These captures show the deployed lab on **20 October 2026**, not the live state of your resources.

@@ -31,7 +31,7 @@ Connections use thicker, right-angled arrows with larger heads. Model calls and 
 | Orange box | Object in focus for this phase | This is a learning highlight, not a successful deployment status |
 | Gray box | Component not used or not connected to the focused KB | Do not assume it contributes to this phase's answer |
 
-Every architecture has a short description and a numbered **Step by step** walkthrough beside its README or notebook image. The walkthrough identifies the relevant connections, explains preparation versus query-time calls, and ends with the evidence to inspect. These are conceptual reading steps for the phase, not replacements for the notebook's executable section numbers. Retrieval can overlap, so the list is not a serial execution trace. The section-specific process strip and product comparison still explain the exact change made by that section.
+The notebooks keep two architecture images each, at the beginning and end. Detailed walkthroughs and supplementary process strips remain companion material instead of being repeated before every section. The walkthroughs identify connections, distinguish preparation from query-time calls, and describe evidence to inspect. Retrieval can overlap, so they are not serial execution traces.
 
 The architecture is grounded in `infra/main.bicep` and notebook calls. The lab uses public endpoints and does not provision a VNet, private endpoints, or a hosted agent. Optional indexing Blob Storage is disabled by default and omitted from this runtime view. Fabric capacity is an Azure preparation resource, while the workspace and its data remain a separate SaaS boundary. These are architecture references, not live health dashboards.
 
@@ -47,7 +47,7 @@ The architecture is grounded in `infra/main.bicep` and notebook calls. The lab u
 
 The hosted lab preconfigures Search, model deployments, indexed data, Fabric items, and Work IQ identity prerequisites. The notebooks mainly create Search data-plane objects. Creating a KB is not provisioning another Azure service.
 
-The section-specific architecture guides and product comparisons are learning aids, not original product screenshots. The architecture depicts the phase's target, not a claim that the preceding code created every object. The strips describe a learning sequence, not runtime connections. Each comparison distinguishes the expected change, the inspection location, and the evidence needed. Authentication and local agent steps do not create portal resources.
+Supplementary architecture guides and process strips are learning aids, not original product screenshots. They remain available as generated assets but are not embedded between notebook exercises. Architecture depicts a target, not proof that the preceding code created every object. Authentication and local agent steps do not create portal resources.
 
 ## Build, see, verify
 
@@ -118,22 +118,22 @@ Only publish captures whose depicted state has actually been verified. If a reso
 
 ## Concept illustrations
 
-The [notebook README](../src/notebooks/README.md) introduces evidence roles, retrieval grounding, and Azure resource scopes. Ten additional Markdown checkpoints place the detailed explanations immediately before the relevant exercise or reference inspection. These are original conceptual drawings grounded in the lab code, not reproduced presentation pages. They contain no facilitator answers or private query results.
+The [notebook README](../src/notebooks/README.md) introduces evidence roles, retrieval grounding, and Azure resource scopes. The following optional reference catalog keeps all detailed concepts outside the notebook exercise flow. These are original conceptual drawings grounded in the lab code, not reproduced presentation pages. They contain no facilitator answers or private query results.
 
-| Concept | Placement | What to notice |
+| Concept | Relevant exercise or reading | What to notice |
 | --- | --- | --- |
-| [Five evidence roles](../img/concepts/evidence-roles.png) | README scenario and Part 4 step 5 | Policies, operational facts, commitments, relationships and current discussion have different authority |
+| [Five evidence roles](../img/concepts/evidence-roles.png) | README scenario, optional preparation for Part 4 step 5 | Policies, operational facts, commitments, relationships and current discussion have different authority |
 | [Retrieval grounding](../img/concepts/retrieval-grounding.png) | README mental model | Retrieved evidence makes answers inspectable, not automatically correct |
 | [Azure scopes](../img/concepts/azure-scopes.png) | README service roles | Fabric and Microsoft 365 are outside the Azure resource-group container |
-| [Model roles](../img/concepts/model-roles.png) | Part 1 before step 2 | Embedding produces vectors, while the chat model handles language |
-| [Ingestion](../img/concepts/document-ingestion.png) | Part 1 before step 3 | File ingestion prepares passages, vectors and metadata, unlike connecting existing indexes |
-| [Source versus KB](../img/concepts/source-versus-kb.png) | Part 1 before step 4 | Connections can be reused by separate KB variants |
-| [Index anatomy](../img/concepts/index-anatomy.png) | Part 1 before step 6 | Text, vectors and source metadata serve different purposes |
-| [Citation trail](../img/concepts/citation-trail.png) | Part 1 before the first reference inspection | Match reference IDs and activity IDs, then inspect the actual evidence |
-| [Authorization lanes](../img/concepts/authorization-lanes.png) | Part 2 before step 2, also linked from README | Search credentials do not grant Fabric or Microsoft 365 access |
-| [Ontology relationships](../img/concepts/ontology-relationships.png) | Part 2 before step 3 | Explicit directed relationships are not inferred document mentions |
-| [Workplace versus commitment](../img/concepts/workplace-versus-commitment.png) | Part 3 before step 5 | A proposed date does not amend an approved purchase order |
-| [Answer boundary](../img/concepts/answer-boundary.png) | Part 5 before step 3 | Extractive KB output is evidence for a local agent's separate model call |
+| [Model roles](../img/concepts/model-roles.png) | Optional preparation for Part 1 step 2 | Embedding produces vectors, while the chat model handles language |
+| [Ingestion](../img/concepts/document-ingestion.png) | Optional preparation for Part 1 step 3 | File ingestion prepares passages, vectors and metadata, unlike connecting existing indexes |
+| [Source versus KB](../img/concepts/source-versus-kb.png) | Optional preparation for Part 1 step 4 | Connections can be reused by separate KB variants |
+| [Index anatomy](../img/concepts/index-anatomy.png) | Optional preparation for Part 1 step 6 | Text, vectors and source metadata serve different purposes |
+| [Citation trail](../img/concepts/citation-trail.png) | Optional reference for Part 1 citations | Match reference IDs and activity IDs, then inspect the actual evidence |
+| [Authorization lanes](../img/concepts/authorization-lanes.png) | Optional preparation for Part 2 step 2 | Search credentials do not grant Fabric or Microsoft 365 access |
+| [Ontology relationships](../img/concepts/ontology-relationships.png) | Optional preparation for Part 2 step 3 | Explicit directed relationships are not inferred document mentions |
+| [Workplace versus commitment](../img/concepts/workplace-versus-commitment.png) | Optional preparation for Part 3 step 5 | A proposed date does not amend an approved purchase order |
+| [Answer boundary](../img/concepts/answer-boundary.png) | Optional preparation for Part 5 step 3 | Extractive KB output is evidence for a local agent's separate model call |
 
 ### Selection from the 26-slide primer
 
@@ -170,7 +170,7 @@ The twelve concept diagrams have deterministic SVG, PNG, and editable `.excalidr
 .\.venv\Scripts\python.exe -m unittest tests.test_concept_diagrams
 ```
 
-Edit the generator, not a generated image. Keep `lab-concept-guide` Markdown cells before their corresponding exercise and preserve the original cells, code, saved outputs, execution counts, and notebook metadata. These concept illustrations are intentionally separate from `img/portal/` and its capture manifest. They do not fill missing portal views or assert successful remote access.
+Edit the generator, not a generated image. Keep concept illustrations in companion documentation rather than adding `lab-concept-guide` cells to the notebooks. Each notebook should show only its opening and closing architectures plus matching genuine portal captures. Preserve executable cells, saved outputs, execution counts, and notebook metadata. Concept illustrations are separate from `img/portal/` and its capture manifest. They do not fill missing portal views or assert successful remote access.
 
 The eight primary service architectures are generated locally as self-contained SVG, PNG, and editable Graphviz `.dot` sources. The generator also writes `descriptions.json` and `walkthroughs.json` for shared notebook captions and numbered reading steps. Keep the Markdown explanations beside README and notebook images synchronized with those manifests when changing a phase. Graphviz lays out the topology, then the SVG routing pass moves model and identity lines into dedicated lanes to avoid container headings and separates crossings visually. Regenerate through the Python script rather than running `dot` alone to retain this routing. Install Graphviz separately and make `dot` available on PATH, or use the standard Windows installation location. The rendering environment also requires `resvg-py`. No browser, cloud deployment, or external rendering service is used:
 
@@ -200,7 +200,7 @@ The targeted visual checks are:
 .\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*visual*.py" -v
 ```
 
-These checks validate presentation, error paths, notebook structure, local links, the eight official-icon architectures, all 24 supplementary diagram pairs, and section coverage. They accept either cleared notebooks or successful saved execution results. Only the two previously saved architecture SVG displays were refreshed for the new visuals. Code, execution counts, configuration read-back, query answers, references, and activity results are retained. Clear outputs and reset execution counts before committing notebooks, as required by `AGENTS.md`. The checks do not deploy resources, authenticate a user, or prove live Fabric/Work IQ retrieval.
+These checks validate presentation, error paths, notebook structure, local links, the eight official-icon architectures, all 24 supplementary diagram pairs, and the streamlined layout with two boundary architectures and matching portal captures. They accept either cleared notebooks or successful saved execution results. Visual simplification preserves code, execution counts, configuration read-back, query answers, references, and activity results. Clear outputs and reset execution counts before committing notebooks, as required by `AGENTS.md`. The checks do not deploy resources, authenticate a user, or prove live Fabric/Work IQ retrieval.
 
 ## Product references
 

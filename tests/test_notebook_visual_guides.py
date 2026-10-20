@@ -111,7 +111,7 @@ class NotebookGuideTests(unittest.TestCase):
                     if stage in generator.STAGES and element["id"] in ("cloud", "local", "legend"):
                         self.assertEqual(element["backgroundColor"], "transparent")
 
-    def test_each_numbered_section_has_map_and_product_comparison(self):
+    def test_numbered_sections_do_not_repeat_maps_or_product_comparisons(self):
         for path in sorted(NOTEBOOKS.glob("part*.ipynb")):
             cells = json.loads(path.read_text(encoding="utf-8"))["cells"]
             steps = []
@@ -122,7 +122,6 @@ class NotebookGuideTests(unittest.TestCase):
                 tags = cell.get("metadata", {}).get("tags", [])
                 if cell["cell_type"] == "markdown" and re.search(r"^## Step \d+:", text, re.MULTILINE):
                     steps.append(i)
-                    self.assertIn("lab-section-map", cells[i + 1]["metadata"]["tags"])
                 if "lab-section-map" in tags:
                     maps.append(i)
                     self.assertIn("../../img/architecture/step-", text)
@@ -136,13 +135,9 @@ class NotebookGuideTests(unittest.TestCase):
                     for phrase in ("Expected after this section", "Where to look", "What to verify"):
                         self.assertIn(phrase, text)
             with self.subTest(notebook=path.name):
-                self.assertEqual(len(steps), len(maps))
-                self.assertEqual(len(steps), len(comparisons))
-                for n, start in enumerate(steps):
-                    self.assertLess(start, maps[n])
-                    self.assertLess(maps[n], comparisons[n])
-                    if n + 1 < len(steps):
-                        self.assertLess(comparisons[n], steps[n + 1])
+                self.assertTrue(steps)
+                self.assertEqual(maps, [])
+                self.assertEqual(comparisons, [])
 
     def test_added_display_cells_only_use_previously_defined_names(self):
         for path in sorted(NOTEBOOKS.glob("part*.ipynb")):

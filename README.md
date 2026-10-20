@@ -18,7 +18,7 @@ Use Foundry IQ to build a multi-source knowledge base with agentic retrieval, Fa
 
 [![Policy, supplier evidence, approved commitments, explicit relationships and workplace context contribute different kinds of support to one briefing.](img/concepts/evidence-roles.png)](img/concepts/evidence-roles.png)
 
-**Read the evidence before the answer:** a discussion does not amend a contract, and a document mention does not establish a structured relationship. This concept illustration explains the source roles, not deployed state. Click to enlarge. The [notebook guide](src/notebooks/README.md) introduces retrieval grounding and Azure resource scopes, while detailed illustrations appear just before the exercises that need them.
+**Read the evidence before the answer:** a discussion does not amend a contract, and a document mention does not establish a structured relationship. This concept illustration explains the source roles, not deployed state. Click to enlarge. The [notebook guide](src/notebooks/README.md) and [visual field guide](docs/visual-guide.md#concept-illustrations) provide optional concept explanations outside the exercises.
 
 ![Service map showing policy and indexed evidence, live Fabric and Work IQ sources, Azure AI Search knowledge bases, model deployments, identity, and the local notebook or agent.](img/architecture/azure-overview.svg)
 
@@ -68,7 +68,7 @@ Optional Blob Storage belongs to the preparation/indexing pipeline. It is not an
 
 #### Follow the same visual rhythm in every exercise
 
-1. **Before the section:** read the visible architecture at the beginning of the notebook and any concept illustration before the exercise. Orange marks focused architecture objects. Expand the section architecture for an optional close-up. The compact learning sequence is a process aid, not the architecture.
+1. **Before the exercise:** read the architecture at the beginning of the notebook. Orange marks focused architecture objects.
 2. **Build:** run the code. A map is a target or learning sequence, not proof that something exists.
 3. **See and verify:** follow the portal path and compare the expected observation with service read-back. For queries, inspect actual activity, references, and citations.
 
