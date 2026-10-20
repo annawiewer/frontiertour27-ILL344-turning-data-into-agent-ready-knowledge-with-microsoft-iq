@@ -161,10 +161,9 @@
       "notebook": "part1-standard-foundry-iq-kb.ipynb",
       "part": 1,
       "step": 2,
-      "captures": [
-        "policy-source-files"
-      ],
-      "status": "captured"
+      "captures": [],
+      "status": "omitted",
+      "reason": "Portal navigation is retained. The shared source-and-files screenshot appears only in Step 3, after upload, to avoid repeating the same image."
     },
     {
       "notebook": "part1-standard-foundry-iq-kb.ipynb",

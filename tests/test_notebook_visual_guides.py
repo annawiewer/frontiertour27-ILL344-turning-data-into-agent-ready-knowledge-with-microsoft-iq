@@ -200,7 +200,7 @@ class PortalCaptureTests(unittest.TestCase):
     def test_guides_match_step_coverage_and_do_not_fill_omitted_steps(self):
         coverage = self.manifest["coverage"]
         self.assertEqual(len(coverage), 31)
-        self.assertEqual(sum(row["status"] == "captured" for row in coverage), 13)
+        self.assertEqual(sum(row["status"] == "captured" for row in coverage), 12)
         by_step = {(row["notebook"], row["step"]): row for row in coverage}
         self.assertEqual(len(by_step), 31)
         seen = set()
@@ -239,6 +239,24 @@ class PortalCaptureTests(unittest.TestCase):
             if row["status"] == "omitted":
                 self.assertEqual(row["captures"], [])
                 self.assertNotIn((row["notebook"], row["step"]), seen)
+
+    def test_part1_policy_screenshot_is_shown_only_after_upload(self):
+        notebook = json.loads(
+            (NOTEBOOKS / "part1-standard-foundry-iq-kb.ipynb").read_text(encoding="utf-8")
+        )
+        image_cells = [
+            cell["id"] for cell in notebook["cells"]
+            if re.search(
+                r"!\[[^\]]+\]\(\.\./\.\./img/portal/policy-source-files\.png\)",
+                "".join(cell["source"]),
+            )
+        ]
+        self.assertEqual(image_cells, ["part1-portal-step3"])
+        navigation = next(
+            cell for cell in notebook["cells"] if cell.get("id") == "part1-portal-step2"
+        )
+        self.assertIn("**Open:**", "".join(navigation["source"]))
+        self.assertIn("Step 3", "".join(navigation["source"]))
 
     def test_manifest_does_not_publish_environment_identifiers(self):
         text = json.dumps(self.manifest)

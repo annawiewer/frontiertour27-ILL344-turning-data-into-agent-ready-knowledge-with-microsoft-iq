@@ -117,7 +117,7 @@ Each notebook contains just two architecture images: one near the beginning and 
 3. **Inspect:** use matching portal screenshots and their navigation captions, then check actual configuration or query evidence.
 4. **Review and verify:** return to the architecture recap at the end, then compare its intended wiring with the service read-back and actual query activity, references, and citations. A diagram is not proof that a resource exists or a query succeeded.
 
-The notebooks now include **12 original Azure portal screenshots at 13 matching checkpoints**, with the navigation path, fields to inspect, and an explanation of what the view does and does not prove. Click an image to enlarge it. These captures show the deployed lab on **20 October 2026**, not the live state of your resources.
+The notebooks now include **12 original Azure portal screenshots at 12 matching checkpoints**, with the navigation path, fields to inspect, and an explanation of what the view does and does not prove. Part 1 Step 2 retains navigation guidance and refers to the shared screenshot in Step 3 rather than repeating it. Click an image to enlarge it. These captures show the deployed lab on **20 October 2026**, not the live state of your resources.
 
 Gray blocks hide environment identifiers. Orange outlines are added reading aids, not deployment status. Actual source membership, file status, model settings, and portal limitations are preserved. For example, the portal lists Work IQ as **Other**, and the policy file view contains repeated uploads from earlier runs. Neither is an instruction to recreate those details.
 

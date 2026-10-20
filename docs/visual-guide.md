@@ -85,14 +85,14 @@ An active file source or a successful upload does not establish that a file is s
 
 Reference screenshots must come from a seeded lab environment, not a fabricated UI. They illustrate navigation and expected appearance, never an attendee's current status. Do not execute deployments or chargeable retrieval calls solely to manufacture screenshot states.
 
-**Capture status, 20 October 2026:** 12 genuine Azure portal screenshots are embedded at 13 matching checkpoints across all five notebooks. Each image has a navigation path, inspection guidance, a capture date, and a redaction/annotation disclosure. The [capture manifest](../img/portal/captures.json) records the observed state, original and published SHA-256 hashes, editing policy, and placement or omission for all 31 numbered steps. Originals remain outside the repository.
+**Capture status, 20 October 2026:** 12 genuine Azure portal screenshots are embedded at 12 matching checkpoints across all five notebooks. Each image has a navigation path, inspection guidance, a capture date, and a redaction/annotation disclosure. The [capture manifest](../img/portal/captures.json) records the observed state, original and published SHA-256 hashes, editing policy, and placement or omission for all 31 numbered steps. Originals remain outside the repository.
 
 Only appropriate Azure portal views are included. There are **no substitute notebook screenshots, simulated portal screens, or placeholder images** for local setup, delegated authentication, SDK-only configuration, query results, MCP tools, or local agent activity. Existing notebook code, execution counts, outputs, and architecture images are unchanged by this capture pass.
 
 | Original capture | Placement | What it establishes |
 | --- | --- | --- |
 | Search indexes | Part 1, step 6 | Existing index names and observed document counts |
-| Policy source and files | Part 1, steps 2 and 3 | File source type, embedding deployment, generated index, and uploaded-file status |
+| Policy source and files | Part 1, step 3, with navigation guidance in step 2 | File source type, embedding deployment, generated index, and uploaded-file status. The shared screenshot is shown only once after upload |
 | Policy KB | Part 1, step 4 | One configured source |
 | Two indexed source definitions | Part 1, step 7 | Each source points to the intended existing index |
 | Three-source KB | Part 1, step 8 | Policy plus the two indexed sources |
