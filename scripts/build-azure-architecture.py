@@ -230,36 +230,36 @@ def build(stage, detailed=False):
             f'label=<{label(title_, details, icon)}>];'
         )
 
-    def edge(from_, to_, text, kind="query", constraint=True):
+    def edge(from_, to_, text, kind="query", constraint=True, visible_label=None):
         color = PURPLE if kind == "model" else GRAY if kind in {"identity", "setup"} else BLUE
         style = "dashed" if kind in {"identity", "setup"} else "solid"
         lines.append(
             f'{from_} -> {to_} [tooltip={json.dumps(text)}, color="{color}", '
-            f'fontcolor="{color}", style="{style}", constraint={str(constraint).lower()}];'
+            f'fontcolor="{color}", style="{style}", constraint={str(constraint).lower()}'
+            + (f', xlabel={json.dumps(visible_label)}' if visible_label else "") + '];'
         )
 
     cluster("local", "PARTICIPANT DEVICE  |  not hosted in Azure", PURPLE, "#F8F6FC")
-    node("notebook", "Jupyter notebook", [
+    node("notebook", "Your question and answer" if agent_detail else "Jupyter notebook", [
+        "Type a question in the notebook",
+        "Read the agent's answer here",
+    ] if agent_detail else [
         "Local Python client",
-        "Runs the agent + displays its answer" if agent_detail else
         "Parts 1-4: display the KB answer" if notebook_enabled else "Other parts: reference only",
     ], "browser", notebook_enabled or agent_detail)
     if overview or agent:
-        node("agent", "Microsoft Agent Framework", [
+        node("agent", "Local agent" if agent_detail else "Microsoft Agent Framework", [
+            "Python code running in your notebook",
+            "Uses a model and a retrieval tool",
+        ] if agent_detail else [
             "Part 5: local Python agent", "MCP tool + model client", "Not a hosted Foundry agent",
         ], active=agent_enabled, focus=agent)
-    if agent_detail:
-        node("mcp_tool", "MCPStreamableHTTPTool", [
-            "Local tool client, not a hosted service",
-            "knowledge_base_retrieve only",
-            "Search key in api-key header",
-        ], focus=True)
     if not detailed:
         node("pdf", "Purchasing policy PDF", ["Local input, uploaded in Part 1"], active=True)
     lines.append("}")
 
     cluster("azure", "AZURE RESOURCE GROUP  |  preconfigured services", BLUE, "#F4F9FF")
-    cluster("search", "Azure AI Search  |  Foundry IQ retrieval", BLUE, "#FFFFFF", "search", [
+    cluster("search", "Azure AI Search  |  Foundry IQ retrieval", BLUE, "#FFFFFF", "search", [] if agent_detail else [
         "Vector + full-text search, semantic ranking",
         "System-assigned managed identity",
     ])
@@ -271,15 +271,13 @@ def build(stage, detailed=False):
         short = kb_name.removesuffix("-knowledge-base")
         kb_lines = [short + "-", "knowledge-base", f"{len(attached)} connected source definitions"]
         kb_lines.append("extractiveData / minimal / no model" if agent else "answerSynthesis / model attached")
-    node("kb", "Knowledge base" if detailed else "Knowledge base + source definitions", kb_lines, "foundry-iq",
-         not foundation, not foundation)
     if agent_detail:
-        node("mcp_endpoint", "Knowledge base MCP endpoint", [
-            "/knowledgebases/{name}/mcp",
-            "Exposed automatically by Search",
-            "Returns evidence, not a final answer",
-        ], focus=True)
-    if detailed:
+        kb_lines = ["Finds passages in the three Part 1 sources",
+                    "Returns evidence, not a written answer", "No model attached"]
+    node("kb", "Knowledge base: find evidence" if agent_detail else
+         "Knowledge base" if detailed else "Knowledge base + source definitions", kb_lines, "foundry-iq",
+         not foundation, not foundation)
+    if detailed and not agent:
         node("index_sources", "Two index source definitions", [
             "supplier-evidence-knowledge-source",
             "sourcing-documents-knowledge-source",
@@ -294,22 +292,27 @@ def build(stage, detailed=False):
                 "workiq-knowledge-source", "Create or update in Step 3",
                 "User assertion at query time",
             ], focus=True)
-    node("indexes", "Existing Search indexes", [
+    node("indexes", "Two document sources" if agent_detail else "Existing Search indexes", [
+        "Supplier evidence", "Approved sourcing documents",
+        "Already searchable from Part 1",
+    ] if agent_detail else [
         "supplier-evidence", "sourcing-documents",
         "Chunks, vectors and citation metadata",
         "Existing data, not recreated here" if detailed else
         "Connected" if "evidence" in attached else "Preloaded, not connected to this KB",
     ], active="evidence" in attached, focus=bool(new & {"evidence", "sourcing"}))
-    node("policy", "File knowledge source", [
+    node("policy", "Purchasing policy" if agent_detail else "File knowledge source", [
+        "The policy uploaded in Part 1",
+    ] if agent_detail else [
         "Uploaded policy chunks + vectors" if "policy" in attached else "Create and ingest in Part 1",
         "file-docs-knowledge-source",
     ], active="policy" in attached, focus="policy" in new)
     lines.append("}")
-    cluster("foundry", "Microsoft Foundry  |  existing account + project", PURPLE, "#F7F6FD")
-    node("models", "Azure OpenAI model deployments", [
-        "Existing chat model deployment",
-        "Tool selection + answer synthesis",
-        "Azure OpenAI key authentication",
+    cluster("foundry", "Microsoft Foundry" if agent_detail else
+            "Microsoft Foundry  |  existing account + project", PURPLE, "#F7F6FD")
+    node("models", "Chat model (Azure OpenAI)" if agent_detail else "Azure OpenAI model deployments", [
+        "Helps the agent choose its tool",
+        "Turns retrieved evidence into an answer",
     ] if agent_detail else [
         "gpt-5.4: planning / answer synthesis",
         "text-embedding-3-large: text to vectors",
@@ -325,8 +328,7 @@ def build(stage, detailed=False):
     lines.append('notebook -> kb [style=invis, weight=5];')
     if agent_detail:
         lines.extend([
-            '{rank=same; notebook; agent; mcp_tool;}',
-            '{rank=same; kb; mcp_endpoint; models;}',
+            '{rank=same; kb; models;}',
         ])
     else:
         lines.extend([
@@ -341,10 +343,10 @@ def build(stage, detailed=False):
         edge("notebook", "kb", "1  Retrieve API\nQuestion / cited KB answer")
     if agent_enabled:
         if agent_detail:
-            edge("notebook", "agent", "Run agent with the question, then display response.text")
-            edge("agent", "mcp_tool", "Execute the model-requested retrieval tool")
-            edge("mcp_tool", "mcp_endpoint", "Streamable HTTP MCP\nknowledge_base_retrieve\napi-key: Search admin key")
-            edge("mcp_endpoint", "kb", "Retrieve extracts from this KB")
+            edge("notebook", "agent", "Run agent with the question, then display response.text",
+                 visible_label="Ask a question")
+            edge("agent", "kb", "knowledge_base_retrieve over MCP, using the Search key",
+                 visible_label="MCP: get evidence")
         else:
             edge("agent", "kb", "Part 5  MCP\nknowledge_base_retrieve\nExtracts, not a KB answer")
         edge("agent", "models", "Part 5  Direct model call\n" +
@@ -357,7 +359,7 @@ def build(stage, detailed=False):
             edge("policy", "models", "Embedding generation", "setup")
         edge("kb", "policy", "Retrieve policy")
     if "evidence" in attached:
-        if detailed:
+        if detailed and not agent:
             edge("kb", "index_sources", "Use two Search index knowledge sources")
             edge("index_sources", "indexes", "Query existing document indexes")
         else:
@@ -611,20 +613,18 @@ PART_REVEALS = {
         ),
     },
     5: {
-        "stage": "agent", "focus": ("kb", "agent", "mcp_tool", "mcp_endpoint"),
-        "new_edges": ("notebook->agent", "agent->mcp_tool", "mcp_tool->mcp_endpoint",
-                      "mcp_endpoint->kb", "agent->models", "kb->policy",
-                      "kb->index_sources", "index_sources->indexes"),
+        "stage": "agent", "focus": ("kb", "agent"),
+        "new_edges": ("notebook->agent", "agent->kb", "agent->models", "kb->policy", "kb->indexes"),
         "covers": {},
         "before": (
-            "Part 5 begins: build an extractive KB and local agent",
-            "Start with three Part 1 sources and the chat model. Create an extractive KB, tool client and local agent.",
-            "The notebook runs the agent. Search exposes the KB MCP endpoint automatically. Faint paths are planned.",
+            "Part 5 begins: give your agent an evidence tool",
+            "You will build the two orange boxes: a local agent and a KB that returns evidence.",
+            "The chat model and the three Part 1 sources already exist. Faint arrows show the planned calls.",
         ),
         "after": (
-            "Part 5 complete: local agent over an extractive KB",
-            "The notebook runs the agent. Its model selects tools and writes the answer from the MCP evidence.",
-            "MCP uses the Search key. The model uses the OpenAI key. No KB model, hosted agent, Fabric or Work IQ.",
+            "Part 5 complete: the agent answers using retrieved evidence",
+            "The KB finds evidence. The model helps the local agent reason and write. You read the answer in the notebook.",
+            "Unlike Parts 1-4, the KB does not write the answer. The agent runs locally, not as a hosted Azure agent.",
         ),
     },
 }
@@ -648,6 +648,20 @@ def build_part_reveal(part, complete=False):
         for group in graph.findall(ns + "g")
         if group.find(ns + "title") is not None
     }
+    if part == 5:
+        for name in ("notebook->agent", "agent->kb"):
+            group = groups[name]
+            path = group.findall(".//" + ns + "path")[-1]
+            numbers = [float(n) for n in re.findall(r"-?\d+(?:\.\d+)?", path.attrib["d"])]
+            points = list(zip(numbers[::2], numbers[1::2]))
+            start, end = max(
+                ((a, b) for a, b in zip(points, points[1:]) if abs(a[1] - b[1]) < .01),
+                key=lambda pair: abs(pair[0][0] - pair[1][0]),
+            )
+            text = group.find(".//" + ns + "text")
+            text.set("x", str((start[0] + end[0]) / 2))
+            text.set("y", str(start[1] - 10))
+            text.set("text-anchor", "middle")
     replacements = dict(zip(DESCRIPTIONS[stage], descriptions))
     replacements[STAGES[stage][0]] = title
     replacements["Orange boxes: focus of this phase. Gray boxes: not connected to this KB."] = (
@@ -693,8 +707,6 @@ def build_part_reveal(part, complete=False):
     if part == 4:
         for name in ("ontology", "lakehouse", "workiq"):
             groups[name].set("opacity", "0.55")
-    if part == 5:
-        groups["index_sources"].set("opacity", "0.55")
     for name in config["focus"]:
         group = groups[name]
         group.set("opacity", "1")

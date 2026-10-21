@@ -355,7 +355,10 @@ class AzureArchitectureTests(unittest.TestCase):
                     self.assertNotIn("Gray boxes: not connected", text)
                     membership = "connected" if complete else "planned"
                     source_kind = "references" if part in (4, 5) else "definitions"
-                    self.assertIn(f"{membership} source {source_kind}", text)
+                    if part == 5:
+                        self.assertIn("three Part 1 sources", text)
+                    else:
+                        self.assertIn(f"{membership} source {source_kind}", text)
                     groups = {
                         group.find(ns + "title").text: group
                         for group in root.iter(ns + "g")
@@ -421,7 +424,7 @@ class AzureArchitectureTests(unittest.TestCase):
             self.assertNotIn("pdf", groups)
             self.assertNotIn("policy->models", groups)
 
-    def test_part5_runs_in_notebook_with_explicit_key_authenticated_mcp_path(self):
+    def test_part5_explains_agent_model_and_evidence_without_sdk_boxes(self):
         ns = "{http://www.w3.org/2000/svg}"
         for complete in (False, True):
             root = ET.fromstring(self.generator.build_part_reveal(5, complete))
@@ -431,18 +434,21 @@ class AzureArchitectureTests(unittest.TestCase):
                 for group in root.iter(ns + "g")
                 if group.find(ns + "title") is not None
             }
-            for edge in ("notebook->agent", "agent->models", "agent->mcp_tool",
-                         "mcp_tool->mcp_endpoint", "mcp_endpoint->kb",
-                         "kb->policy", "kb->index_sources", "index_sources->indexes"):
+            for edge in ("notebook->agent", "agent->models", "agent->kb",
+                         "kb->policy", "kb->indexes"):
                 self.assertEqual(groups[edge].attrib["opacity"], "1" if complete else "0.12")
             for omitted in ("kb->models", "notebook->kb", "notebook->entra", "pdf",
-                            "ontology", "workiq", "policy->models"):
+                            "ontology", "workiq", "policy->models", "mcp_tool",
+                            "mcp_endpoint", "index_sources"):
                 self.assertNotIn(omitted, groups)
             self.assertNotIn("opacity", groups["notebook"].attrib)
-            for phrase in ("Runs the agent + displays its answer", "knowledge_base_retrieve only",
-                           "Search key in api-key header", "Azure OpenAI key authentication",
-                           "Exposed automatically by Search", "extractiveData / minimal / no model"):
+            for phrase in ("Your question and answer", "Python code running in your notebook",
+                           "MCP: get evidence", "No model attached",
+                           "Returns evidence, not a written answer",
+                           "Turns retrieved evidence into an answer"):
                 self.assertIn(phrase, text)
+            nodes = {name for name, group in groups.items() if group.attrib.get("class") == "node"}
+            self.assertEqual(nodes, {"notebook", "agent", "kb", "models", "policy", "indexes"})
             self.assertNotIn("Other parts: reference only", text)
             self.assertNotIn("The agent calls the model, not the KB", text)
 
